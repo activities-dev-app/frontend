@@ -1,0 +1,42 @@
+/* base backgrounds */
+$background-white: white; //darken($color: white, $amount: 1);
+$background-white-lighter: lighten($color: white, $amount: 20);
+
+$background-black: lighten($color: black, $amount: 10);
+$background-black-lighter: lighten($color: black, $amount: 15);
+
+/* colors */
+$color-light: darkslateblue;
+$color-light-selected: cornflowerblue;
+$color-hover-light: lighten($color: $color-light, $amount: 25);
+
+$color-dark: blanchedalmond;
+$color-hover-dark: lighten($color: $color-dark, $amount: 55);
+
+$color-white: darken($color: white, $amount: 5);
+$color-black: lighten($color: black, $amount: 10);
+
+/* body background colors */
+$background-color-light: $background-white;
+$background-color-hover-light: $background-white-lighter;
+
+$background-color-dark: $background-black;
+$background-color-hover-dark: $background-black-lighter;
+
+
+$color-modal-background: rgb(211, 211, 211, 0.35);
+$color-red-error: crimson;
+$color-green-success: green;
+
+.container {
+    &--light {
+        background-color: $background-color-light;
+        color: $color-light;
+    }
+
+    &--dark {
+        background-color: $background-color-dark;
+        color: $color-dark;
+    }
+}
+

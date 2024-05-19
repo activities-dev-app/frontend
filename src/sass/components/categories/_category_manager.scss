@@ -1,0 +1,32 @@
+.category-manager {
+    
+    &__buttons {
+        height: 3rem;
+        width: 6rem;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    //&__button {}
+
+    &__icon {
+        width: 2.2rem;
+
+        &--light {
+            color: $color-light;
+
+            &:hover {
+                color: $color-hover-light;
+            }
+
+        }
+        
+        &--dark {
+            color: $color-dark;
+            
+            &:hover {
+                color: $color-hover-dark;
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+.button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+
+    &__add {
+        @include button_default();
+        &--light {
+            @include hover_lighten($color-light, 5);
+            background-color: $color-light;
+            color: $color-white;
+        }
+
+        &--dark {
+            @include hover_lighten($color-dark, 5);
+            background-color: $color-dark;
+            color: $color-black;
+        }
+    }
+
+    &__reload {
+        @include button_default();
+        @include hover_lighten(lightgray, 5);
+        background-color: lightgray;
+        color: dimgray;
+        margin-bottom: 1rem;
+    }
+
+    &__update,
+    &__delete {
+        &--light {
+            color: $color-light;
+
+            &:hover {
+                width: 2.5rem;
+                color: $color-hover-light;
+            }
+        }
+
+        &--dark {
+            color: $color-dark;
+
+            &:hover {
+                width: 2.5rem;
+                color: $color-hover-dark;
+            }
+        }
+    }
+}

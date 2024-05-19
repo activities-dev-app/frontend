@@ -1,0 +1,85 @@
+.app-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 1rem;
+    width: 100%;
+    z-index: 1000;
+
+    &__menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        width: $side-pane-width;
+
+        &__links {
+            text-decoration: none;
+            font-size: 1.4rem;
+            color: inherit;
+
+            &--light {
+                color: $color-light;
+
+                &:hover {
+                    color: $color-hover-light;
+                }
+            }
+
+            &--dark {
+                color: $color-dark;
+
+                &:hover {
+                    color: $color-hover-dark;
+                }
+            }
+        }
+    }
+
+    &__admin {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+
+        &__user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &__icon {
+                $size: 3rem;
+                width: $size;
+                height: $size;
+            }
+
+            &__content {
+                position: absolute;
+                top: 4rem;
+                right: 1rem;
+                border: .1rem solid;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-end;
+
+                gap: 1rem;
+
+                padding: 0.8rem;
+                border-radius: 0.5rem;
+
+                &--light {
+                    background-color: $color-light;
+                    color: $color-white;
+                }
+
+                &--dark {
+                    background-color: $background-black-lighter;
+                    color: $color-dark;
+                }
+            }
+        }
+    }
+}

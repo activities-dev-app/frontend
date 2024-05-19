@@ -1,0 +1,34 @@
+.quill {
+    //margin: 0 5rem;
+
+    &--light {}
+
+    &--dark {}
+
+    &__editor {
+        &__wrapper {
+            &--light {
+                border: 0.1rem solid $color-light;
+            }
+
+            &--dark {
+                border: 0.1rem solid $color-dark;
+            }
+            //height: 30rem;
+        }
+
+        &__controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.8rem;
+
+            &__details {
+                display: flex;
+                gap: 1rem;
+            }
+
+
+            //padding: .5rem 0;
+        }
+    }
+}

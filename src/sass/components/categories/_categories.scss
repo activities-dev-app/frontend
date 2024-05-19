@@ -1,0 +1,153 @@
+.categories {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    &__list {
+        &--light {
+            @include default_loaders($color-light);
+        }
+
+        &--dark {
+            @include default_loaders($color-dark);
+        }
+
+        list-style: none;
+        //position: static;
+
+        width: 100%;
+        min-width: max-content;
+
+        &__item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0.1rem;
+
+            &__selected {
+                padding-left: 0.5rem;
+                border-left-style: solid;
+                border-left-width: 0.4rem;
+
+                &--light {
+                    border-color: $color-light-selected;
+                    background-color: rgba($color-light-selected, 0.1);
+                    a {
+                        color: $color-light;
+                    }
+                }
+
+                &--dark {
+                    background-color: $background-color-hover-dark;
+                    a {
+                        color: $color-dark;
+                    }
+                }
+            }
+
+            &__link {
+                text-decoration: none;
+                font-size: 1.4rem;
+                padding: 0.8rem 0;
+                text-transform: capitalize;
+                position: relative;
+
+                &--light {
+                    color: $color-light;
+
+                    &:hover {
+                        color: $color-light;
+                    }
+                }
+
+                &--dark {
+                    color: $color-dark;
+
+                    &:hover {
+                        color: $color-dark;
+                    }
+                }
+
+                &__selected {
+                    cursor: default;
+
+                    &--light {
+                        color: $color-light;
+                    }
+
+                    &--dark {
+                        color: $color-dark;
+                    }
+                }
+
+                &__tooltip {
+                    z-index: 1000 !important;
+                    border: 0.1rem solid;
+
+                    &--light {
+                        background-color: $color-white !important;
+                        color: $color-light !important;
+                    }
+
+                    &--dark {
+                        background-color: $background-color-hover-dark !important;
+                        color: $color-dark !important;
+                    }
+                }
+            }
+
+            &__activities-list {
+                &__item {
+                    font-size: 1.3rem;
+                    margin-left: 1.4rem;
+                    margin-bottom: 0.6rem;
+                    text-transform: capitalize;
+
+                    a {
+                        text-decoration: none;
+                    }
+
+                    &--light {
+                        a {
+                            color: $color-light;
+                            @include hover_lighten_font-color($color-light, 15);
+                        }
+                    }
+
+                    &--dark {
+                        a {
+                            color: $color-dark;
+                            @include hover_lighten_font-color($color-dark, 15);
+                        }
+                    }
+
+                    &__selected {
+                        a {
+                            text-decoration: underline;
+                        }
+                    }
+
+                    &__tooltip {
+                        z-index: 3000 !important;
+                        border: 0.1rem solid;
+
+                        &--light {
+                            background-color: $color-white !important;
+                            color: $color-light !important;
+                        }
+
+                        &--dark {
+                            background-color: $background-color-hover-dark !important;
+                            color: $color-dark !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        &__item__link:active &__item {
+            background-color: grey;
+        }
+    }
+}

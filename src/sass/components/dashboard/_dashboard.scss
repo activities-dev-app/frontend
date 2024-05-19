@@ -1,0 +1,48 @@
+.dashboard {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+
+    &__allotment {
+        &--light {
+            .sash {
+                background-color: transparent;
+
+                &-hover {
+                    --focus-border: cornflowerblue;
+                }
+            }
+        }
+
+        &--dark {
+            .sash {
+                background-color: transparent;
+
+                &-hover {
+                    --focus-border: blanchedalmond;
+                }
+            }
+        }
+
+        &__side-pane {
+            &--light {
+                
+                background-color: rgba(beige, .5);
+                
+                & input#category-filter {
+                    background-color: rgba(beige, .1)
+                }
+            }
+            //&--dark {}
+        }
+        
+        &__main-pane {
+            &--light {
+                background-color: rgba(beige, .3);
+            }
+            &--dark {
+                background-color: $background-color-hover-dark;
+            }
+        }
+    }
+}

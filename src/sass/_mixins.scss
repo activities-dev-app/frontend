@@ -1,0 +1,70 @@
+@mixin default_loaders($color) {
+    &__loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $color;
+    }
+}
+
+@mixin hover($color) {
+    &:hover:not(:disabled) {
+        background-color: $color;
+    }
+}
+
+@mixin hover_lighten($color, $amount) {
+    &:hover:not(:disabled) {
+        background-color: lighten($color: $color, $amount: $amount);
+    }
+}
+
+@mixin hover_lighten_border($color, $amount) {
+    &:hover:not(:disabled) {
+        border-color: lighten($color: $color, $amount: $amount);
+    }
+}
+
+@mixin hover_lighten_font-color($color, $amount) {
+    &:hover:not(:disabled) {
+        color: lighten($color: $color, $amount: $amount);
+    }
+}
+
+@mixin hover_darken($color, $amount) {
+    &:hover:not(:disabled) {
+        background-color: darken($color: $color, $amount: $amount);
+    }
+}
+
+@mixin hover_darken_border($color, $amount) {
+    &:hover:not(:disabled) {
+        border-color: lighten($color: $color, $amount: $amount);
+    }
+}
+
+@mixin hover_darken_font-color($color, $amount) {
+    &:hover:not(:disabled) {
+        color: darken($color: $color, $amount: $amount);
+    }
+}
+
+@mixin button_default() {
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-size: 1.6rem;
+
+    &:disabled {
+        opacity: 0.55;
+    }
+}
+
+@mixin button_small() {
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    font-size: 1.4rem;
+
+    &:disabled {
+        opacity: 0.55;
+    }
+}

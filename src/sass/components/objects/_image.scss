@@ -1,0 +1,185 @@
+.image {
+    &__list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        &__item {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+
+            &__buttons-wrapper {
+                visibility: hidden;
+                position: absolute;
+
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                width: 100%;
+
+                &--visible {
+                    visibility: visible;
+                }
+            }
+
+            &__buttons {
+                display: none;
+
+                &--expanded {
+                    background-color: rgba(50, 50, 50, 0.8);
+                    display: flex;
+                    justify-content: flex-start;
+                    width: 100%;
+                }
+            }
+
+            &__button {
+                padding: 0.5rem;
+                color: $color-white;
+                font-size: 1rem;
+                width: fit-content;
+                height: 3rem;
+                background-color: rgba(50, 50, 50, 0.8);
+
+                &__delete,
+                &__more,
+                &__close {
+                    &__icon {
+                        height: 1.6rem;
+
+                        &:hover {
+                            height: 1.7rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &__details {
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        //&__main {}
+
+        &__danger {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+    }
+
+    &__modal {
+        max-width: 95vw;
+        max-height: 95vh;
+        
+        &__fullscreen-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 95vw;
+            height: 95vh;
+            padding-top: 10vh;
+        }
+
+        &__focused-image-wrapper {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80vh;
+            width: calc(95vw - 15rem - 2rem);
+            max-height: 80vh;
+            position: relative;
+        }
+
+        &__selector-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 2.5rem;
+            background-color: rgba(100, 100, 100, 0.3);
+
+            //&--next, &--prev {}
+        }
+
+        &__focused-image-container {
+            flex-grow: 1;
+            height: 80vh;
+            overflow: hidden;
+        }
+
+        &__focused-image-zoomed-image-wrapper {}
+
+        &__focused-image {
+            &__zoom-controls {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: fit-content;
+                padding: 1rem;
+
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                gap: 1rem;
+
+                &--light {
+                    color: $color-light;
+                }
+
+                &--dark {
+                    color: $color-dark;
+                }
+
+                &__zoom-button {
+                    background-color: rgba(100, 100, 100, 0.3);
+                    color: inherit;
+                }
+            }
+
+            &--zoomed-in {
+                cursor: -webkit-zoom-out;
+                cursor: -moz-zoom-out;
+                cursor: zoom-out;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none;
+                -webkit-user-drag: none;
+            }
+
+            &--zoomed-out {
+                cursor: -webkit-zoom-in;
+                cursor: -moz-zoom-in;
+                cursor: zoom-in;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none;
+                object-fit: scale-down;
+                object-position: center;
+                height: 79vh;
+                width: 100%;
+            }
+        }
+
+        &__thumbnails-wrapper {
+            max-height: 80vh;
+            width: 15rem;
+            overflow: scroll;
+        }
+
+        &__thumbnails {
+            display: flex;
+            flex-direction: column;
+
+            &__image {
+                margin-bottom: 1rem;
+            }
+        }
+    }
+}

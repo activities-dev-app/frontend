@@ -1,0 +1,104 @@
+.form {
+
+    &__input {
+        padding: 1rem 0;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        &--small {
+            padding: .5rem 0;
+        }
+
+        &__label {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            font-weight: bold;
+
+            &--small {
+                margin-bottom: .2rem;
+            }
+        }
+
+        &__wrapper {
+            position: relative;
+            display: flex;
+            width: 100%;
+
+        }
+
+        &__input {
+            padding: 1rem;
+            font-size: 1.6rem;
+            border: none;
+            outline: none;
+            border: 1px solid dimgray;
+            border-radius: 0.3rem;
+            position: relative;
+            z-index: 50;
+            width: 100%;
+
+            &--small {
+                padding: .8rem;
+                font-size: 1.4rem;
+            }
+
+            &--light {
+                background-color: $background-white-lighter;
+                color: $color-light;
+
+                &:focus-visible {
+                    border: none;
+                    outline: 2px solid $color-light;
+                }
+            }
+
+            &--dark {
+                background-color: $background-black-lighter;
+                color: $color-dark;
+
+                &:focus-visible {
+                    border: none;
+                    outline: 2px solid $color-dark;
+                }
+            }
+
+            &__error {
+                border: 2px solid $color-red-error;
+                
+                &:focus-visible {
+                    outline: none;
+                    border: 2px solid $color-red-error;
+                }
+            }
+        }
+
+        &__icons-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+
+            .icon-align-right {
+                position: absolute;
+                right: 0;
+                z-index: 100;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-right: .5rem;
+
+                * {
+                    width: 3rem;
+                }
+            }
+            
+        }
+
+        &__error-message {
+            color: $color-red-error;
+        }
+    }
+}

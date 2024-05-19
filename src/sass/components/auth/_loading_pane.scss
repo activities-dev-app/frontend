@@ -1,0 +1,16 @@
+.loading-pane {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    z-index: 1100;
+    top: 0;
+    left: 0;
+
+    min-height: 100%;
+    flex-grow: 1;
+    width: 100%;
+
+    background-color: rgba(100, 100, 100, .3);
+}

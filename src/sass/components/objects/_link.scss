@@ -1,0 +1,195 @@
+/* Classes applied to LinkObjectComponent */
+.link {
+    padding-top: 1rem;
+    //border-top: 0.2rem solid;
+
+    &--light {
+        a {
+            color: $color-light;
+        }
+        border-color: $color-light;
+    }
+
+    &--dark {
+        a {
+            color: $color-dark;
+        }
+        border-color: $color-dark;
+    }
+
+    &__details {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    @mixin label-font {
+        font-size: 1.6rem;
+        color: inherit;
+        font-family: inherit;
+        font-weight: bold;
+        line-height: 1.8;
+    }
+
+    @mixin controls {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        position: absolute;
+        right: 0;
+        z-index: 1000;
+
+        &__button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+
+            &--light {
+                background-color: $color-light;
+                color: $color-white;
+            }
+            
+            &--dark {
+                background-color: $background-color-hover-dark;
+                color: $color-dark;
+                border: .1rem solid $color-dark;
+            }
+        }
+    }
+
+    &--label {
+        @include label-font();
+
+        //&__form {}
+
+        &__wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        &__update-input {
+            @include label-font();
+            width: 100%;
+            border: none;
+            outline: none;
+
+            &--light {
+                background-color: darken($background-white, 5);
+                color: $color-light;
+
+                &:focus {
+                    outline: 0.2rem solid $color-light;
+                }
+            }
+
+            &--dark {
+                background-color: $background-black;
+                color: $color-dark;
+
+                &:focus {
+                    outline: 0.2rem solid $color-dark;
+                }
+            }
+        }
+
+        &__controls {
+            @include controls();
+        }
+    }
+
+    @mixin url-font {
+        font-size: 1.4rem;
+        color: inherit;
+        font-family: inherit;
+        line-height: 1.8;
+    }
+
+    &--url {
+        @include url-font();
+
+        //&__form{}
+
+        &__edit-mode {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            .button-edit-mode {
+                margin-top: 0.5rem;
+            }
+        }
+
+        &__normal-mode {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        &__update-input {
+            @include url-font();
+            width: 100%;
+            border: none;
+            outline: none;
+
+            &--light {
+                background-color: darken($background-white, 5);
+                color: $color-light;
+
+                &:focus {
+                    outline: 0.2rem solid $color-light;
+                }
+            }
+
+            &--dark {
+                background-color: $background-black;
+                color: $color-dark;
+
+                &:focus {
+                    outline: 0.2rem solid $color-dark;
+                }
+            }
+        }
+
+        &__controls {
+            @include controls();
+        }
+    }
+
+    &--comment {
+        margin-top: 2rem;
+        font-size: 1.4rem;
+        font-family: inherit;
+        padding: 0.5rem 0;
+        padding-left: 1rem;
+        border: 0.1rem solid transparent;
+        border-left: 0.2rem solid;
+        white-space: pre-wrap; /* https://stackoverflow.com/a/6098078/11704817 */
+
+        //&__form {}
+
+        &__edit-mode {
+            margin-top: 1rem;
+            font-size: 1.4rem;
+            font-family: inherit;
+        }
+
+        &__normal-mode {
+            padding-bottom: 2rem;
+            position: relative;
+
+            .button-add-note {
+                margin-top: 0.5rem;
+            }
+        }
+
+        &__controls {
+            @include controls();
+            bottom: 0;
+        }
+    }
+}

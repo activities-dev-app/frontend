@@ -1,0 +1,17 @@
+.form-button {
+    @include button_default();
+
+    &__submit {
+        @include hover_lighten($color-green-success, 5);
+        background-color: $color-green-success;
+        color: $color-white;
+        margin: 1rem 0;
+    }
+
+    &__cancel {
+        @include hover_lighten($color-red-error, 5);
+        background-color: $color-red-error;
+        color: $color-white;
+        margin: 1rem 0;
+    }
+}

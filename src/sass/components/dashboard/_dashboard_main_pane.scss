@@ -1,0 +1,132 @@
+.dashboard {
+    &__main-pane {
+        display: flex;
+        flex-direction: column;
+        border-left: 2px solid gray;
+        position: relative;
+        width: 100%; //calc(100vw - $side-pane-width);
+        height: 100%;
+
+        //&--light {}
+
+        //&--dark {}
+
+        &__variable-width {
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - 5rem);
+            height: 100%;
+
+            overflow: hidden;
+
+            @media screen and (min-width: 992px) {
+                max-width: calc(100% - 16rem);
+            }
+        }
+
+        &__header {
+            padding: 1rem;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-transform: capitalize;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &--light {
+                color: $color-light;
+
+                a {
+                    color: $color-light;
+                }
+            }
+
+            &--dark {
+                color: $color-dark;
+
+                a {
+                    color: $color-dark;
+                }
+            }
+
+            &__wrapper {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            &__details {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+
+        &__main {
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+            overflow-x: hidden;
+            padding-right: .4rem;
+            
+            &--light {
+                scrollbar-color: $color-light $color-white;
+            }
+
+            &--dark {
+                scrollbar-color: $color-dark $background-color-hover-dark;
+            }
+        }
+
+        &__footer {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            margin-bottom: 1rem;
+            margin-right: 1rem;
+
+            &__button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 1rem !important;
+                height: 4.4rem;
+                transition: all 0.3s;
+
+                &__text {
+                    display: none;
+                }
+
+                &:hover {
+                    padding: 1rem 2.5rem !important;
+                    transition: all 0.2s;
+                }
+            }
+
+            @media screen and (min-width: 992px) {
+                &__button {
+                    padding: 1rem 2.5rem !important;
+                    width: 15rem;
+
+                    &__text {
+                        display: block;
+                    }
+
+                    &__icon {
+                        display: none;
+                    }
+                }
+            }
+
+            &__button:hover &__button__text {
+                display: block;
+            }
+
+            &__button:hover &__button__icon {
+                display: none;
+            }
+        }
+    }
+}

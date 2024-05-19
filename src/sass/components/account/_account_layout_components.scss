@@ -1,0 +1,64 @@
+.account {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        margin: 1rem;
+
+        &__button a {
+            text-decoration: none;
+            color: darken($color-light, $amount: 5);
+            z-index: 3000;
+
+            &:hover {
+                color: lighten($color-light, 15);
+            }
+        }
+    }
+
+    &__main {
+        flex-grow: 1;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__content {
+            width: 80%;
+            max-width: 100rem;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: center;
+        margin: 1rem;
+    }
+}
+
+.account-page {
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &__title {
+        font-size: 3rem;
+    }
+
+    &__email {
+        font-size: 2rem;
+    }
+
+    #email, #password {
+        border: .2rem solid $color-light;
+        border-radius: .5rem;
+        padding: 2rem 1rem;
+    }
+
+
+}

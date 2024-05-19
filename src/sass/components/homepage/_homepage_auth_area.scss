@@ -1,0 +1,25 @@
+.homepage-auth-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 2rem;
+
+    padding: 2rem 3rem;
+
+    &__login,
+    &__register {
+
+        & a {
+            text-decoration: none;
+            color: cadetblue;
+            font-size: 1.8rem;
+
+            &:hover {
+                color: lighten(cadetblue, 15);
+            }
+        }
+    }
+
+    //&__register {}
+}

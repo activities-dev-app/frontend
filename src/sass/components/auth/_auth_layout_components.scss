@@ -1,0 +1,404 @@
+@mixin layout($schema, $max-width: 50rem) {
+    &__header {
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        padding: 1rem;
+        width: 100%;
+
+        .button-home a {
+            text-decoration: none;
+            color: darken($color-light, $amount: 5);
+            z-index: 3000;
+
+            @if $schema == "light" {
+                color: white;
+            } @else if $schema == "dark" {
+                color: darkslateblue;
+            }
+
+            &:hover {
+                color: lighten($color-light, 15);
+            }
+        }
+    }
+
+    &__main {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        flex-grow: 1;
+
+        &__content {
+            width: 80%;
+            max-width: $max-width;
+            padding: 5rem;
+            margin: 3rem 0;
+
+            background-color: rgba($color: white, $alpha: 0.1);
+
+            @if $schema == "light" {
+                color: white;
+            } @else if $schema == "dark" {
+                color: darkslateblue;
+            }
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: center;
+        max-width: fit-content;
+        padding: 1rem;
+        background-color: rgba($color: white, $alpha: 0.5);
+        color: $color-light;
+        padding: 1rem 2.5rem;
+        font-weight: bold;
+    }
+}
+
+@mixin success_page() {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    gap: 1rem;
+    padding: 5rem;
+
+    .main-text {
+        font-size: 3rem;
+    }
+
+    .secondary-text {
+        font-size: 1.6rem;
+    }
+}
+
+.authentication {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    &__login,
+    &__register {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        width: 100%;
+        flex-grow: 1;
+
+        color: inherit
+    }
+
+    &__login {
+        background-image: url(https://images.unsplash.com/photo-1552154357-aaba12e68e64?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+        background-position: bottom;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        @include layout("light");
+    }
+
+    &__register {
+        background-image: url(https://images.unsplash.com/photo-1444927714506-8492d94b4e3d?q=80&w=876&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+        background-position: bottom;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        .icon {
+            color: darkslateblue;
+        }
+
+        @include layout("light");
+
+        .password-strength-meter {
+            display: flex;
+            justify-content: space-around;
+            padding: .4rem;
+            font-weight: bold;
+
+            &--empty {
+                background-color: rgba($color: white, $alpha: .75);
+            }
+
+            &--very-weak {
+                background-color: rgba($color: red, $alpha: .75);
+            }
+
+            &--weak {
+                background-color: rgba($color: red, $alpha: .75);
+            }
+
+            &--medium {
+                background-color: rgba($color: orange, $alpha: .75);
+            }
+
+            &--strong {
+                background-color: rgba($color: green, $alpha: .75);
+            }
+
+            &--very-strong {
+                background-color: rgba($color: green, $alpha: .75);
+            }
+
+            &--perfect {
+                background-color: rgba($color: green, $alpha: .75);
+            }
+        }
+    }
+
+    &__status {
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(darkslateblue, 0.5);
+
+        &__success {
+            @include success_page();
+        }
+    }
+}
+
+.callback {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    &__confirm {
+        &__success {
+            @include success_page();
+
+            &__button {
+                padding: 1rem 2rem;
+                border: 0.2rem solid darkslateblue;
+                border-radius: 0.5rem;
+                text-decoration: none;
+                color: darkslateblue;
+                font-size: 1.6rem;
+                font-weight: bold;
+            }
+        }
+    }
+
+    @include layout("dark", 80rem);
+}
+
+.unverified {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    
+    &__verify-message {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .main-text {
+            font-size: 2rem;
+        }
+    
+        .secondary-text {
+            font-size: 1.6rem;
+        }
+
+        &__button {
+            padding: 1rem 2rem;
+            border: 0.2rem solid darkslateblue;
+            border-radius: 0.5rem;
+            color: darkslateblue;
+            font-weight: bold;
+        }
+    }
+
+    &__success {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .main-text {
+            font-size: 2rem;
+        }
+    
+        .secondary-text {
+            font-size: 1.6rem;
+        }
+    }
+
+    @include layout("dark", 80rem);
+}
+
+.password {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+
+    .forgot,
+    .success,
+    .error {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &__image {
+            padding: 3rem 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 2.1rem;
+            width: 100%;
+        }
+
+        .main-text {
+            font-size: 1.6rem;
+            width: 100%;
+            padding-bottom: 1.6rem;
+        }
+
+        .secondary-text {
+            font-size: 1.4rem;
+            width: 100%;
+            padding-bottom: 1rem;
+        }
+
+        &__button {
+            padding: 1rem 2rem;
+            border: 0.2rem solid darkslateblue;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: darkslateblue;
+            font-size: 1.6rem;
+            font-weight: bold;
+            width: 100%;
+            height: 4.3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:disabled {
+                cursor: default
+            }
+
+            &--loading-message {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+            }
+        }
+    }
+
+    @include layout("dark");
+}
+
+.authentication-button {
+    padding: 1rem 2rem;
+    border: 0.2rem solid white;
+    border-radius: 0.5rem;
+
+    &__submit {
+        transition: all 0.3s;
+        font-weight: bold;
+
+        &:hover {
+            transition: all 0.3s;
+            background-color: white;
+            color: darkslateblue;
+        }
+    }
+}
+
+.button.forgot,
+.button.register {
+    padding: 1rem 0;
+    a {
+        text-decoration: none;
+        color: darkslateblue;
+
+        &:hover {
+            color: lighten($color: darkslateblue, $amount: 15);
+        }
+    }
+}
+
+.button.login {
+    a {
+        text-decoration: none;
+        color: white;
+
+        &:hover {
+            color: darken($color: white, $amount: 15);
+        }
+    }
+}
+
+.button.clear {
+    color: white;
+
+    &:hover {
+        color: darken($color: white, $amount: 15);
+    }
+}
+
+.button.icon-align-right {
+
+    color: darkslateblue;
+}
+
+
+.form-buttons-group {
+
+    margin-top: 1.6rem;
+    
+    &__row-1 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    &__row-2 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.checkbox {
+
+    visibility: hidden;
+
+    &__icon {
+        position: absolute;
+
+    }
+    
+    &__label {
+        margin-top: 2rem;
+        font-size: 1.2rem;
+        color: $color-light;
+        height: 2rem;
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+}

@@ -6,19 +6,46 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sass": "sass ./src/sass/main.scss ./src/styles/index.css --watch"
   },
   "dependencies": {
+    "@babel/parser": "^7.24.4",
+    "@babel/traverse": "^7.24.1",
+    "@monaco-editor/react": "^4.6.0",
+    "@panzoom/panzoom": "^4.5.1",
+    "@tabler/icons-react": "^3.3.0",
+    "@use-gesture/vanilla": "^10.3.1",
+    "allotment": "^1.20.0",
+    "axios": "^1.6.7",
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^2.2.0",
+    "localforage": "^1.10.0",
+    "monaco-editor": "^0.47.0",
+    "monaco-jsx-highlighter": "^2.77.77",
+    "next": "^14.2.3",
+    "next-cloudinary": "^6.5.1",
+    "password-meter": "^3.10.2",
+    "quill": "^2.0.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.1.0"
+    "react-resizable-panels": "^2.0.18",
+    "react-tooltip": "^5.26.3",
+    "validator": "^13.11.0",
+    "zod": "^3.22.4",
+    "zoomist": "^2.0.11"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@types/argon2-browser": "^1.18.4",
+    "@types/babel__traverse": "^7.20.5",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/validator": "^13.11.9",
     "eslint": "^8",
-    "eslint-config-next": "14.1.0"
+    "eslint-config-next": "14.1.0",
+    "sass": "^1.71.1",
+    "typescript": "^5"
   }
 }

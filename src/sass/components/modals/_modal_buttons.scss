@@ -1,0 +1,21 @@
+.modal-button {
+    &__confirm {
+        @include button_default();
+        background-color: $color-green-success;
+        @include hover_lighten($color-green-success, 5);
+        color: $color-white;
+        margin: 1rem 0;
+    }
+
+    &__cancel {
+        @include button_default();
+        @include hover_lighten($color-red-error, 5);
+        background-color: $color-red-error;
+        color: $color-white;
+        margin: 1rem 0;
+    }
+
+    &__x {
+        font-size: 2rem;
+    }
+}

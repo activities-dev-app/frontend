@@ -1,0 +1,16 @@
+.confirmDialog {
+    display: flex;
+    flex-direction: column;
+
+    &__message {
+        font-size: 1.5rem;
+    }
+    &__buttons {
+        align-self: flex-end;
+        margin-top: 1rem;
+
+        & *:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+}

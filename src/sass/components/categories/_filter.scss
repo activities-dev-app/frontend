@@ -1,0 +1,47 @@
+.filter {
+    position: relative;
+
+    &__input {
+        width: 100%;
+        height: 3rem;
+        font-size: 1.4rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+        border: none;
+        outline: none;
+
+        &--light {
+            background-color: $background-white;
+
+            &:focus-visible {
+                outline: 2px solid $color-light;
+            }
+        }
+    
+        &--dark {
+            background-color: $background-black;
+            color: $color-dark;
+
+            &:focus-visible {
+                outline: 2px solid $color-dark;
+            }
+        }
+    }
+
+
+    &__icon {
+        width: 2rem;
+        height: 2rem;
+        position: absolute;
+        color: dimgray;
+        top: calc(50% - 1rem);
+
+        &--filter {
+            left: 0.4rem;
+        }
+
+        &--x {
+            right: 0;
+        }
+    }
+}

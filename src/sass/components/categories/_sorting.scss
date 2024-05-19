@@ -1,0 +1,52 @@
+.sorting {
+    padding: .5rem;
+
+    *:not(:last-child) {
+        margin-right: 1rem;
+    }
+
+    &__button {        
+        &__icon {
+            width: 2rem;
+            height: 2rem;
+
+            &--light {
+                color: $color-light;
+                
+                &:hover {
+                    color: $color-hover-light;
+                }
+            }
+            
+            &--dark {
+                color: $color-dark;
+                
+                &:hover {
+                    color: $color-hover-dark;
+                }
+            }
+
+            &__selected {
+                &--light {
+                    color: $color-light;
+                    cursor: default;
+                    border-bottom: 1px solid $color-light;
+        
+                    &:hover {
+                        color: $color-light;
+                    }
+                }
+                
+                &--dark {
+                    color: $color-dark;
+                    cursor: default;
+                    border-bottom: 1px solid $color-dark;
+                    
+                    &:hover {
+                        color: $color-dark;
+                    }
+                }
+            }
+        }
+    }
+}

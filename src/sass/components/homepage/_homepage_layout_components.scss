@@ -1,0 +1,99 @@
+.container.homepage-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-image: url(/Hexagon-dotted-connect-line-background.svg);
+    //background-image: url(/vecteezy_abstract-simple-shape-fluid-shapes-memphis-style-background_7167445.svg);
+    //background-image: url(/vecteezy_vector-abstract-background-with-soft-gradient-color-and_6849510.svg);
+    //background-image: url(/Hexagon-dotted-connect-line-background.jpg);
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 80%;
+        max-width: 92rem;
+
+        height: 50%;
+
+        &__main {
+            &__app-name {
+                font-size: 6rem;
+                font-family: var(--font-lexend_exa);
+                text-decoration: none;
+                color: cadetblue;
+                text-align: center;
+
+                padding: .6rem 1rem;
+
+                background-image: linear-gradient(
+                    to right,
+                    rgba($color: white, $alpha: 0.75),
+                    rgba($color: white, $alpha: 0.05)
+                );
+
+                @media (max-width: 912px) {
+                    font-size: 4.5rem;
+
+                    background-image: linear-gradient(
+                        to right,
+                        rgba($color: white, $alpha: 0.3),
+                        rgba($color: white, $alpha: 0.05)
+                    );
+                }
+
+                @media (max-width: 700px) {
+                    font-size: 3rem;
+
+                    background-image: linear-gradient(
+                        to right,
+                        rgba($color: white, $alpha: 0.3),
+                        rgba($color: white, $alpha: 0.05)
+                    );
+                }
+            }
+        }
+
+        &__menu {
+            height: 2rem;
+
+            &__navigation {
+                padding: 1rem 2rem;
+
+                background-image: linear-gradient(
+                    to right,
+                    rgba($color: white, $alpha: 0.75),
+                    rgba($color: white, $alpha: 0.05)
+                );
+
+                &__link {
+                    text-decoration: none;
+                    font-size: 2.6rem;
+                    color: darkslateblue;
+                }
+            }
+        }
+    }
+
+    .main {
+        flex-grow: 1;
+    }
+
+    .footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__text {
+            font-size: 1.2rem;
+            color: dimgray;
+            margin: 1rem;
+        }
+    }
+}
