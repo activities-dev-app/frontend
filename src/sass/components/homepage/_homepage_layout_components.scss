@@ -17,20 +17,20 @@
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
-        width: 80%;
-        max-width: 92rem;
+        width: 85%;
+        max-width: 102.4rem;
 
         height: 50%;
 
         &__main {
             &__app-name {
-                font-size: 6rem;
+                font-size: 6.5rem;
                 font-family: var(--font-lexend_exa);
                 text-decoration: none;
                 color: cadetblue;
                 text-align: center;
 
-                padding: .6rem 1rem;
+                padding: 0.6rem 1rem;
 
                 background-image: linear-gradient(
                     to right,
@@ -87,6 +87,7 @@
 
     .footer {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
 
@@ -94,6 +95,20 @@
             font-size: 1.2rem;
             color: dimgray;
             margin: 1rem;
+            text-align: center;
+        }
+
+        &__social {
+            display: flex;
+            gap: 1.6rem;
+
+            & a {
+                color: $color-light;
+
+                &:hover {
+                    color: $color-hover-light;
+                }
+            }
         }
     }
 }

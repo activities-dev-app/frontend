@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback, useState } from "react";
 import { useDataContext } from "@/app/(dashboard)/context";
 import { useTheme } from "@/context";

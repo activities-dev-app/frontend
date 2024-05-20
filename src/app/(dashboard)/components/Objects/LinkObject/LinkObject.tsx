@@ -1,3 +1,5 @@
+"use client"
+
 import { useTheme } from "@/context";
 import { ObjectType } from "@/types";
 import { LinkObjectLabel } from "./LinkObjectLabel";

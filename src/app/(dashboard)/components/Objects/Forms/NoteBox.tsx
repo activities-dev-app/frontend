@@ -1,3 +1,5 @@
+"use client"
+
 import { useTheme } from "@/context";
 
 export const NoteBox = ({ comment, setComment, label }: { comment: string, setComment: React.Dispatch<React.SetStateAction<string>>, label: string }) => {

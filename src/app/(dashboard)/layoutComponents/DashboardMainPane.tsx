@@ -1,3 +1,5 @@
+"use client"
+
 import { memo } from "react";
 import { useForm, useTheme } from "@/context";
 import { Button, Loading } from "@/components";

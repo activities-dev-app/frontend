@@ -1,3 +1,5 @@
+"use client"
+
 import { memo } from "react";
 import { useForm, useTheme } from "@/context";
 import { Categories, FilterComponent, SortingComponent } from "@/app/(dashboard)/components";

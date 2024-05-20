@@ -8,8 +8,29 @@ import {
     IconZoomCancel, 
     IconZoomIn, 
     IconZoomOut, 
-    IconZoomReset 
+    IconZoomReset,
+    IconBrandGithub,
+    IconMail,
 } from "@tabler/icons-react";
+
+
+/* Email Icon */
+const email = (className = "") => {
+    return (
+        <IconMail
+            className={className ? `icon icon-email ${className}` : "icon icon-email"}
+        />
+    );
+}
+
+/* Github Brand Icon */
+const github = (className = "") => {
+    return (
+        <IconBrandGithub
+            className={className ? `icon icon-github ${className}` : "icon icon-github"}
+        />
+    );
+}
 
 /* Zoom */
 const zoomIn = (className = "") => {
@@ -620,6 +641,8 @@ const x = (className: string = "") => {
 };
 
 type IconType =
+    "email" |
+    "github" |
     "fullscreen-on" |
     "fullscreen-off" |
     "zoom" |
@@ -659,6 +682,10 @@ type IconType =
 
 const Icon: React.FC<{ icon: IconType, className?: string }> = ({ icon, className }) => {
     switch (icon) {
+        case "email":
+            return email(className);
+        case "github":
+            return github(className);
         case "fullscreen-on":
             return toggleFullscreenOn(className);
         case "fullscreen-off":

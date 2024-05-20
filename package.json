@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sass": "sass ./src/sass/main.scss ./src/styles/index.css --watch"
+    "sass": "sass ./src/sass/main.scss ./src/styles/index.css --watch",
+    "all": "npm-run-all --parallel dev sass"
   },
   "dependencies": {
     "@babel/parser": "^7.24.4",
@@ -45,6 +46,7 @@
     "@types/validator": "^13.11.9",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
+    "npm-run-all": "^4.1.5",
     "sass": "^1.71.1",
     "typescript": "^5"
   }

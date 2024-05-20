@@ -1,3 +1,5 @@
+"use client"
+
 import { Loading, Button } from "@/components";
 import { useForm, useTheme } from "@/context";
 import { useDeleteActivity } from "../hooks";

@@ -80,7 +80,7 @@ export const AddImageForm = ({
         }
         setShow(false);
         clear();
-    }, [caption, cloudinaryImagesArray, setCloudinaryImagesArray, activityId, position, session, setShow, addObject, clear]);
+    }, [caption, cloudinaryImagesArray, activityId, position, session, setShow, addObject, clear]);
 
     const cancel = useCallback(() => {
         setShow(false);

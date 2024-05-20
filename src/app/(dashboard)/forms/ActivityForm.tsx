@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
@@ -130,21 +129,7 @@ export default function ActivityForm({ userId }: { userId: string }) {
                     .catch(() => setFetchError(true));
             }
         }
-    }, [
-        categoryId,
-        categoryName,
-        activityName,
-        activityDescription,
-        addCategory,
-        fetchCategories,
-        fetchActivities,
-        setFetchError,
-        evaluateCategoryName,
-        evaluateActivityName,
-        addActivity,
-        initializeInputs,
-        userId,
-    ]);
+    }, [evaluateCategoryName, categoryName, evaluateActivityName, activityName, categoryId, activityDescription, userId, setFetchError, addCategory, addActivity, addObjectsOrdering, fetchCategories, fetchActivities, initializeInputs]);
 
     const cancel = useCallback(() => {
         cancelAddActivity();

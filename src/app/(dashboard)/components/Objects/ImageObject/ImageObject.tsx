@@ -1,4 +1,6 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+"use client"
+
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { CldUploadButton, CloudinaryUploadWidgetResults } from "next-cloudinary";
 import { useTheme } from "@/context";
 import { ObjectType, ImageData, CloudinaryImageData } from "@/types";
@@ -7,9 +9,8 @@ import { useDataContext } from "@/app/(dashboard)/context";
 import { bulkDeleteFilesFromCloudinary, deleteFileFromCloudinary, deleteFolder } from "./api/cloudinaryApi";
 import { Modal } from "@/components/modals";
 import { DragGesture, WheelGesture } from "@use-gesture/vanilla";
-import Panzoom, { PanzoomObject, PanzoomOptions } from "@panzoom/panzoom";
-import Zoomist from "zoomist";
 import Icon from "@/icons";
+
 
 const ImageObjectComponent = ({ obj }: { obj: ObjectType }) => {
 
@@ -24,20 +25,13 @@ const ImageObjectComponent = ({ obj }: { obj: ObjectType }) => {
     const [expanded, setExpanded] = useState<{ id: string | undefined, value: boolean }>({ id: undefined, value: false });
 
     const [showModal, setShowModal] = useState<{
-        id: string | undefined,
-        imageId: string | undefined,
-        imageUrl: string | undefined,
-        width: number | undefined,
-        height: number | undefined,
+        id: string,
+        imageId: string,
+        imageUrl: string,
+        width: number,
+        height: number,
         value: boolean
-    }>({
-        id: undefined,
-        imageId: undefined,
-        imageUrl: undefined,
-        width: undefined,
-        height: undefined,
-        value: false,
-    });
+    } | undefined>(undefined);
 
     const { imageData } = obj;
 
@@ -60,7 +54,7 @@ const ImageObjectComponent = ({ obj }: { obj: ObjectType }) => {
 
         deleteFileFromCloudinary({ publicId })
             .then(r => console.log(r));
-    }, [obj]);
+    }, [obj.key, updateObject]);
 
     const deleteImageObject = useCallback(({ imageData, objKey }: { imageData: ImageData, objKey: string }) => {
         const publicIds = imageData.cloudinary.map(img => {
@@ -74,7 +68,7 @@ const ImageObjectComponent = ({ obj }: { obj: ObjectType }) => {
             });
 
         removeObject(objKey);
-    }, [removeObject]);
+    }, [obj.activityId, obj.userId, removeObject]);
 
     if (!imageData) return null;
 
@@ -93,24 +87,26 @@ const ImageObjectComponent = ({ obj }: { obj: ObjectType }) => {
                                     setImageHovered(undefined);
                                     setExpanded({ ...expanded, value: false });
                                 }}>
-
-                                <img
-                                    key={img.publicId}
-                                    src={img.url}
-                                    alt={`${img.publicId}`}
-                                    height={200}
-                                    onClick={() => {
-                                        setShowModal({
-                                            id: imageData.controlId,
-                                            imageId: img.publicId,
-                                            imageUrl: img.url,
-                                            width: img.width,
-                                            height: img.height,
-                                            value: true
-                                        });
-                                    }}
-                                />
-
+                                {img.height && img.width &&
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    <img
+                                        key={img.publicId}
+                                        src={img.url}
+                                        alt={`${img.publicId}`}
+                                        width={(img.width / img.height) * 200}
+                                        height={200}
+                                        onClick={() => {
+                                            setShowModal({
+                                                id: imageData.controlId,
+                                                imageId: img.publicId,
+                                                imageUrl: img.url,
+                                                width: Number(img.width),
+                                                height: Number(img.height),
+                                                value: true
+                                            });
+                                        }}
+                                    />
+                                }
                                 <div className={imageHovered === img.publicId ?
                                     `image__list__item__buttons-wrapper image__list__item__buttons-wrapper--visible` :
                                     `image__list__item__buttons-wrapper`}>
@@ -143,12 +139,13 @@ const ImageObjectComponent = ({ obj }: { obj: ObjectType }) => {
                                     </div>
                                 </div>
 
-                                <ModalImage
-                                    imageData={imageData}
-                                    setShow={setShowModal}
-                                    show={showModal}
-                                />
-
+                                {showModal &&
+                                    <ModalImage
+                                        imageData={imageData}
+                                        setShow={setShowModal}
+                                        show={showModal}
+                                    />
+                                }
                             </div>
                         );
                     })
@@ -180,10 +177,10 @@ const ImageObjectComponent = ({ obj }: { obj: ObjectType }) => {
 export default ImageObjectComponent;
 
 type FocusedImage = {
-    id: string | undefined,
-    url: string | undefined,
-    width: number | undefined,
-    height: number | undefined,
+    id: string,
+    url: string,
+    width: number,
+    height: number,
 };
 
 const ModalImage = ({
@@ -192,21 +189,21 @@ const ModalImage = ({
     imageData,
 }: {
     show: {
-        id: string | undefined,
-        imageId: string | undefined,
-        imageUrl: string | undefined,
-        width: number | undefined,
-        height: number | undefined
+        id: string,
+        imageId: string,
+        imageUrl: string,
+        width: number,
+        height: number,
         value: boolean
     },
     setShow: React.Dispatch<React.SetStateAction<{
-        id: string | undefined;
-        imageId: string | undefined;
-        imageUrl: string | undefined;
-        width: number | undefined,
-        height: number | undefined
+        id: string;
+        imageId: string;
+        imageUrl: string;
+        width: number,
+        height: number
         value: boolean;
-    }>>,
+    } | undefined>>,
     imageData: ImageData,
 }) => {
 
@@ -248,7 +245,7 @@ const ModalImage = ({
                     currentImg.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
                 }
             });
-    }, [focusedImage]);
+    }, [focusedImage.id]);
 
     const imageSelector = useCallback((selector: "prev" | "next") => {
         let step: number = 0;
@@ -270,9 +267,21 @@ const ModalImage = ({
         imageData.cloudinary.forEach((el, index) => {
             if (el.publicId === id) {
                 const selectedImage = imageData.cloudinary[index + step];
-                if (selectedImage) {
-                    setFocusedImage({ id: selectedImage.publicId, url: selectedImage.url, width: selectedImage.width, height: selectedImage.height });
-                    setShow({ ...show, imageId: undefined });
+
+                if (selectedImage && selectedImage.width && selectedImage.height) {
+                    setFocusedImage({
+                        id: selectedImage.publicId,
+                        url: selectedImage.url,
+                        width: selectedImage.width,
+                        height: selectedImage.height
+                    });
+                    setShow({
+                        ...show,
+                        height: selectedImage.height,
+                        imageId: selectedImage.publicId,
+                        width: selectedImage.width,
+                        imageUrl: selectedImage.url,
+                    });
                     setZoom(false);
                 }
             }
@@ -296,19 +305,21 @@ const ModalImage = ({
                 setZoomFitHeight({ height: h });
             }
         }
-    }, [setZoom, setZoomFitHeight, setZoomFitWidth]);
+    }, [draggableDivRef, setZoomFitHeight, setZoomFitWidth]);
 
 
     if (show.id !== imageData.controlId || !focusedImage.id || show.value === false) {
         return null;
     }
 
+    if (show && focusedImage && (!show.imageUrl && !focusedImage.url)) return null;
+
     return (
         <Modal
             className="image__modal"
             onDismiss={() => {
-                setShow({ id: undefined, imageId: undefined, imageUrl: undefined, width: undefined, height: undefined, value: false });
-                setFocusedImage({ id: undefined, url: undefined, width: undefined, height: undefined });
+                setShow(undefined);
+                //setFocusedImage({ id: undefined, url: undefined, width: undefined, height: undefined });
                 setZoom(false);
             }}>
             <div className="image__modal__fullscreen-container" ref={fullscreenRef}>
@@ -399,28 +410,34 @@ const ModalImage = ({
                                 <div className="image__modal__focused-image-zoomed-image-wrapper"
                                     ref={zoomableDivRef}
                                     style={{ width: getSize().width, height: getSize().height, margin: "auto" }}>
-                                    
-                                    <img
-                                        className="image__modal__focused-image image__modal__focused-image--zoomed-in"
-                                        src={focusedImage.url || show.imageUrl}
-                                        alt={`Focused image`}
-                                        width={getSize().width}
-                                        height={getSize().height}
-                                        onDoubleClick={() => setZoom(!zoom)}
-                                        draggable={false}
-                                    />
+
+                                    {
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img
+                                            className="image__modal__focused-image image__modal__focused-image--zoomed-in"
+                                            src={focusedImage.url || show.imageUrl}
+                                            alt={`Focused image`}
+                                            width={getSize().width}
+                                            height={getSize().height}
+                                            onDoubleClick={() => setZoom(!zoom)}
+                                            draggable={false}
+                                        />
+                                    }
                                 </div>
                                 :
                                 <div className="image__modal__focused-image-image-wrapper">
-                                    <img
-                                        className="image__modal__focused-image image__modal__focused-image--zoomed-out"
-                                        src={focusedImage.url || show.imageUrl}
-                                        alt={`Focused image`}
-                                        width={"100%"}
-                                        height={"100%"}
-                                        onDoubleClick={setInitialZoom}
-                                        draggable={false}
-                                    />
+                                    {
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img
+                                            className="image__modal__focused-image image__modal__focused-image--zoomed-out"
+                                            src={focusedImage.url || show.imageUrl}
+                                            alt={`Focused image`}
+                                            width={"100%"}
+                                            height={"100%"}
+                                            onDoubleClick={setInitialZoom}
+                                            draggable={false}
+                                        />
+                                    }
                                 </div>
                         }
                     </div>
@@ -441,23 +458,36 @@ const ModalImage = ({
                                         syncThumbnail(img);
                                 }
                                 return (
+                                    // eslint-disable-next-line @next/next/no-img-element
                                     <img
                                         id={img.publicId}
                                         className="image__modal__thumbnails__image"
                                         key={img.publicId}
                                         src={img.url}
-                                        width={"100rem"}
-
+                                        width={"100%"}
+                                        height={"auto"}
                                         style={
                                             focusedImage.id === img.publicId || show.imageId === img.publicId ?
                                                 { border: "1rem solid lightblue" } :
                                                 {}
                                         }
                                         onClick={() => {
-                                            setFocusedImage({ id: img.publicId, url: img.url, width: img.width, height: img.height });
-                                            setShow({ ...show, imageId: undefined });
+                                            setFocusedImage({
+                                                id: img.publicId,
+                                                url: img.url,
+                                                width: Number(img.width),
+                                                height: Number(img.height)
+                                            });
+                                            setShow({
+                                                ...show,
+                                                height: Number(img.height),
+                                                imageId: img.publicId,
+                                                imageUrl: img.url,
+                                                width: Number(img.width),
+                                            });
                                             setZoom(false);
                                         }}
+                                        alt="thumbnail"
                                     />
                                 );
                             })
@@ -515,7 +545,7 @@ const AppendImagesComponent = ({ obj, imageData }: { obj: ObjectType, imageData:
             imageUpdates: { cloudinary: updated },
         });
 
-    }, [imageData]);
+    }, [imageData.cloudinary, updateObject]);
 
     return (
         <CldUploadButton
@@ -559,6 +589,7 @@ const useDragging = () => {
             }
         }
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [draggableDivRef.current]);
 
     return { draggableDivRef }
@@ -575,18 +606,18 @@ const useZoom = ({ focusedImage }: { focusedImage: FocusedImage }) => {
     const [shift, setShift] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
 
     const [zoomType, setZoomType] = useState<"original" | "fit-height" | "fit-width" | "zoom-center" | "scale-down">();
-    const size = useRef<{ width: number | undefined, height: number | undefined }>({ width: focusedImage.width, height: focusedImage.height });
-    const [width, setWidth] = useState<number | undefined>(size.current.width);
-    const [height, setHeight] = useState<number | undefined>(size.current.height);
+    const size = useRef<{ width: number, height: number }>({ width: focusedImage.width, height: focusedImage.height });
+    const [width, setWidth] = useState<number>(size.current.width);
+    const [height, setHeight] = useState<number>(size.current.height);
 
     const [isImageSmaller, setImageSmaller] = useState<boolean>(false);
     const [isWidthSmaller, setWidthSmaller] = useState<boolean>(false);
     const [isHeightSmaller, setHeightSmaller] = useState<boolean>(false);
-    
+
 
     const updateImageDimensions = useCallback(async () => {
-        const originalWidth = focusedImage.width;
-        const originalHeight = focusedImage.height;
+        const originalWidth = Number(focusedImage.width);
+        const originalHeight = Number(focusedImage.height);
 
         if (originalWidth && originalHeight) {
             size.current.width = originalWidth * zoomFactorRef.current;
@@ -598,7 +629,7 @@ const useZoom = ({ focusedImage }: { focusedImage: FocusedImage }) => {
 
         setWidth(size.current.width);
         setHeight(size.current.height);
-    }, [size.current.width, size.current.height, zoomFactorRef.current]);
+    }, [focusedImage.width, focusedImage.height]);
 
 
     const zoomIn = useCallback(() => {
@@ -624,7 +655,7 @@ const useZoom = ({ focusedImage }: { focusedImage: FocusedImage }) => {
 
 
     const setZoomFitHeight = useCallback(({ height }: { height: number }) => {
-        const h = focusedImage.height;
+        const h = Number(focusedImage.height);
         if (h) {
             zoomFactorRef.current = height / h;
             updateImageDimensions();
@@ -635,7 +666,7 @@ const useZoom = ({ focusedImage }: { focusedImage: FocusedImage }) => {
 
 
     const setZoomFitWidth = useCallback(({ width }: { width: number }) => {
-        const w = focusedImage.width;
+        const w = Number(focusedImage.width);
         if (w) {
             zoomFactorRef.current = width / w;
             updateImageDimensions();
@@ -695,7 +726,7 @@ const useZoom = ({ focusedImage }: { focusedImage: FocusedImage }) => {
             setZoomType("zoom-center");
             setShift({ x, y });
         }
-    }, [setZoomType, setShift, zoomableDivRef.current]);
+    }, [setZoomType, setShift]);
 
 
     const getSize = useCallback(() => {
@@ -710,10 +741,12 @@ const useZoom = ({ focusedImage }: { focusedImage: FocusedImage }) => {
 
         if (img) {
             const parent = img.parentElement;
+            const w = Number(size.current.width);
+            const h = Number(size.current.height);
 
-            if (parent && size.current.width && size.current.height) {
-                const widthSmaller = size.current.width < parent.getBoundingClientRect().width;
-                const heightSmaller = size.current.height < parent.getBoundingClientRect().height;
+            if (parent && w && h) {
+                const widthSmaller = w < parent.getBoundingClientRect().width;
+                const heightSmaller = h < parent.getBoundingClientRect().height;
 
                 if (widthSmaller && heightSmaller) {
                     setImageSmaller(true);
@@ -729,7 +762,7 @@ const useZoom = ({ focusedImage }: { focusedImage: FocusedImage }) => {
                 }
             }
         }
-    }, [zoomType, zoomableDivRef.current, width, height, setImageSmaller, setWidthSmaller, setHeightSmaller]);
+    }, [zoomType, width, height, setImageSmaller, setWidthSmaller, setHeightSmaller]);
 
 
     /* Mouse up listener */
@@ -777,7 +810,8 @@ const useZoom = ({ focusedImage }: { focusedImage: FocusedImage }) => {
                 }
             }
         };
-    }, [zoomableDivRef.current, zoomFactorRef.current]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [zoomableDivRef.current]);
 
 
     /* Wheel listener */
@@ -793,7 +827,7 @@ const useZoom = ({ focusedImage }: { focusedImage: FocusedImage }) => {
             if (parent) {
                 wheelGesture = new WheelGesture(parent, ({ delta }) => {
                     clearTimeout(timer);
-                    
+
                     timer = setTimeout(() => {
                         if (delta[1] > 0) {
                             zoomFactorRef.current *= 0.9;
@@ -812,12 +846,13 @@ const useZoom = ({ focusedImage }: { focusedImage: FocusedImage }) => {
                 wheelGesture.destroy();
             }
         };
-    }, [zoomableDivRef.current, zoomFactorRef.current, updateImageDimensions, setZoomFactor]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [updateImageDimensions, setZoomFactor, zoomableDivRef.current]);
 
 
     useEffect(() => {
         center({ x: shiftRef.current.x, y: shiftRef.current.y });
-    }, [center, zoomFactorRef.current, width, height]);
+    }, [center, width, height, zoomFactor]);
 
     return {
         updateImageDimensions,
@@ -840,34 +875,34 @@ const useZoom = ({ focusedImage }: { focusedImage: FocusedImage }) => {
 };
 
 
-const usePanzoom = () => {
-    const zoomableDivRef = useRef<HTMLDivElement>(null);
-    const zoomRef = useRef<PanzoomObject | undefined>(undefined);
-
-    useEffect(() => {
-        const el = zoomableDivRef.current;
-        let panzoom: PanzoomObject | undefined = undefined;
-
-        let options: PanzoomOptions = {
-            disablePan: true,
-            //step: .1, /* The step affects zoom calculation when zooming with a mouse wheel, when pinch zooming, or when using zoomIn/zoomOut */
-
-        };
-
-        if (el) {
-            panzoom = Panzoom(el, options);
-            zoomRef.current = panzoom;
-        }
-
-        return () => {
-            if (panzoom) {
-                panzoom.destroy();
-            }
-        }
-    }, []);
-
-    return { zoomableDivRef, zoomTool: zoomRef.current };
-};
+//const usePanzoom = () => {
+//    const zoomableDivRef = useRef<HTMLDivElement>(null);
+//    const zoomRef = useRef<PanzoomObject | undefined>(undefined);
+//
+//    useEffect(() => {
+//        const el = zoomableDivRef.current;
+//        let panzoom: PanzoomObject | undefined = undefined;
+//
+//        let options: PanzoomOptions = {
+//            disablePan: true,
+//            //step: .1, /* The step affects zoom calculation when zooming with a mouse wheel, when pinch zooming, or when using zoomIn/zoomOut */
+//
+//        };
+//
+//        if (el) {
+//            panzoom = Panzoom(el, options);
+//            zoomRef.current = panzoom;
+//        }
+//
+//        return () => {
+//            if (panzoom) {
+//                panzoom.destroy();
+//            }
+//        }
+//    }, []);
+//
+//    return { zoomableDivRef, zoomTool: zoomRef.current };
+//};
 
 
 /* 

@@ -322,7 +322,7 @@ const useObjects = () => {
                 setObjects([])
             }
         }
-    }, [activity, activityObjectsOrderings.length, activityObjectsList, setObjectsOrdering, setObjects]);
+    }, [activity, activityObjectsOrderings, activityObjectsList, setObjectsOrdering, setObjects]);
 
     //    useEffect(() => {
     //        let objects = activityObjectsList

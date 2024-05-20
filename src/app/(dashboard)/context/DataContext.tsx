@@ -525,6 +525,31 @@ const useActivityObjects = (userId: string) => {
     }, [fetchActivityObjects]);
 
 
+    /**
+ * Update activity ordering
+ */
+    const updateObjectsOrdering = useCallback(({
+        activityId,
+        update
+    }: {
+        activityId: string,
+        update: ObjectsOrdering
+    }) => {
+        dataStore.updateObjectsOrdering({ activityId, update })
+            .then(r => {
+                appData.setObjectsOrdering({ activityId, ordering: update });
+            })
+    }, []);
+
+    /**
+     * Delete activity ordering
+     */
+    const deleteObjectsOrdering = useCallback(({ activityId }: { activityId: string }) => {
+        dataStore.deleteObjectsOrdering(activityId);
+    }, []);
+
+
+
     /* 
     
         Add Object
@@ -658,7 +683,7 @@ const useActivityObjects = (userId: string) => {
                             update: updatedOrdering,
                         });
                     } else {
-                        const updatedOrdering: ObjectsOrdering = [ newObjectOrdering ];
+                        const updatedOrdering: ObjectsOrdering = [newObjectOrdering];
 
                         const newActivityObjectsOrdering = activityObjectsOrderings.map(obj => {
                             if (obj.activityId === activityId) {
@@ -687,7 +712,7 @@ const useActivityObjects = (userId: string) => {
                 console.log("An error occurred while trying to add an object: ", err);
             }
 
-        }, [activityObjectsList, setActivityObjectsList, activityObjectsOrderings, setActivityObjectsOrderings]);
+        }, [activityObjectsList, activityObjectsOrderings, updateObjectsOrdering]);
 
 
     /* 
@@ -834,7 +859,7 @@ const useActivityObjects = (userId: string) => {
         setUnorderedActivityObjectsList(newList);
         appData.setObjects(newList);
         dataStore.deleteObject(objKey);
-    }, [activityObjectsList, activityObjectsOrderings, setActivityObjectsList]);
+    }, [activityObjectsList, activityObjectsOrderings, updateObjectsOrdering]);
 
 
     /**
@@ -941,33 +966,10 @@ const useActivityObjects = (userId: string) => {
                 if (r) {
                     console.log("New objects ordering: ", r)
                     appData.setObjectsOrdering({ activityId, ordering: objectsOrdering });
-                    setActivityObjectsOrderings([...activityObjectsOrderings, r ]);
+                    setActivityObjectsOrderings([...activityObjectsOrderings, r]);
                 }
             })
-    }, [userId]);
-
-    /**
-     * Update activity ordering
-     */
-    const updateObjectsOrdering = useCallback(({
-        activityId,
-        update
-    }: {
-        activityId: string,
-        update: ObjectsOrdering
-    }) => {
-        dataStore.updateObjectsOrdering({ activityId, update })
-            .then(r => {
-                appData.setObjectsOrdering({ activityId, ordering: update });
-            })
-    }, []);
-
-    /**
-     * Delete activity ordering
-     */
-    const deleteObjectsOrdering = useCallback(({ activityId }: { activityId: string }) => {
-        dataStore.deleteObjectsOrdering(activityId);
-    }, []);
+    }, [activityObjectsOrderings, userId]);
 
 
     /* Utility function to build up the orderings for an existing list of objects. */
@@ -977,7 +979,8 @@ const useActivityObjects = (userId: string) => {
 
         let buildActivityObjectsOrdering: ActivityObjectsOrderingData[] = [];
 
-        new Set(activities.map(activity => activity.key)) /* A list of activity ids... */
+        /* A list of activity ids... */
+        new Set(activities.map(activity => activity.key)) 
             .forEach(activityId => {
                 const activityObjects = activityObjectsList
                     .filter(entry => entry.activityId === activityId)

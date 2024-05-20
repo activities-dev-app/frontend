@@ -33,7 +33,7 @@ export async function middleware(request: NextRequest) {
             /* @ts-ignore */
             return await (await fetch(url, { headers })).json() as unknown as LocalSession;
         } catch (err) {
-            console.log("ERROR: ", err);
+            console.log("SESSSION ERROR: ", err);
             return null;
         }
     };

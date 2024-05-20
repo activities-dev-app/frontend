@@ -1,3 +1,5 @@
+"use client"
+
 import { useDataContext } from "@/app/(dashboard)/context";
 import { Button } from "@/components";
 import { FormInput } from "@/components/forms";

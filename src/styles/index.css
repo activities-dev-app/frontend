@@ -258,12 +258,12 @@ body {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 80%;
-  max-width: 92rem;
+  width: 85%;
+  max-width: 102.4rem;
   height: 50%;
 }
 .container.homepage-container .header__main__app-name {
-  font-size: 6rem;
+  font-size: 6.5rem;
   font-family: var(--font-lexend_exa);
   text-decoration: none;
   color: cadetblue;
@@ -300,6 +300,7 @@ body {
 }
 .container.homepage-container .footer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -307,6 +308,17 @@ body {
   font-size: 1.2rem;
   color: dimgray;
   margin: 1rem;
+  text-align: center;
+}
+.container.homepage-container .footer__social {
+  display: flex;
+  gap: 1.6rem;
+}
+.container.homepage-container .footer__social a {
+  color: darkslateblue;
+}
+.container.homepage-container .footer__social a:hover {
+  color: #8a80c7;
 }
 
 .homepage {
