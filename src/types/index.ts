@@ -49,8 +49,14 @@ export type CategoryUpdates = {
 /* Objects  */
 export type LinkData = {
     url?: string;
-    label?: string,
-    comment?: string,
+    label?: string;
+    comment?: string;
+    title?: string;
+    description?: string;
+    images?: string[];
+    favicon?: string;
+    domain?: string;
+    sitename?: string;
 }
 
 export type TextData = {
@@ -156,6 +162,12 @@ export type LinkUpdates = {
     url?: string;
     label?: string;
     comment?: string;
+    title?: string;
+    description?: string;
+    images?: string[];
+    favicon?: string;
+    domain?: string;
+    sitename?: string;
 }
 
 export type CodeUpdates = {

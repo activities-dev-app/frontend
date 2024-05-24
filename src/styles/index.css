@@ -1061,9 +1061,11 @@ body {
 }
 .activity__board--light {
   scrollbar-color: darkslateblue #f2f2f2;
+  border-color: darkslateblue;
 }
 .activity__board--dark {
   scrollbar-color: blanchedalmond #262626;
+  border-color: blanchedalmond;
 }
 .activity__board__objects-list {
   margin-right: 1rem;
@@ -1097,6 +1099,11 @@ body {
   padding: 1rem;
   /* Class applied to an object of type === "link, etc */
 }
+.activity__object--link {
+  border: 2px solid;
+  border-color: inherit;
+  border-radius: 0.5rem;
+}
 
 /* Activity objects */
 /* Classes applied to LinkObjectComponent */
@@ -1120,6 +1127,48 @@ body {
   justify-content: flex-start;
   align-items: center;
   gap: 1rem;
+}
+.link__controls {
+  display: flex;
+  gap: 1rem;
+}
+.link__preview {
+  display: grid;
+  grid-template-columns: 1.8rem auto auto;
+  grid-template-rows: auto auto;
+  grid-template-areas: "favicon title site-image" "description description site-image" "description description site-image";
+}
+.link__favicon-wrapper {
+  grid-area: favicon;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.link__favicon {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+.link__title {
+  grid-area: title;
+  font-size: 1.8rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0 1rem;
+}
+.link__description {
+  grid-area: description;
+  padding: 0.4rem 1rem;
+  font-size: 1.2rem;
+}
+.link__site-image-wrapper {
+  grid-area: site-image;
+  width: auto;
+  height: 10rem;
+}
+.link__site-image {
+  object-fit: scale-down;
+  object-position: top;
 }
 .link--label {
   font-size: 1.6rem;

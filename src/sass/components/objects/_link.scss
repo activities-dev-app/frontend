@@ -24,6 +24,59 @@
         gap: 1rem;
     }
 
+    &__controls {
+        display: flex;
+        gap: 1rem;
+    }
+
+    &__preview {
+        display: grid;
+        grid-template-columns: 1.8rem auto auto;
+        grid-template-rows: auto auto;
+        grid-template-areas: 
+            "favicon title site-image"
+            "description description site-image"
+            "description description site-image";
+    }
+
+    &__favicon-wrapper {
+        grid-area: favicon;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    &__favicon {
+        width: 1.8rem;
+        height: 1.8rem;
+    }
+
+    &__title {
+        grid-area: title;
+        font-size: 1.8rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 0 1rem;
+    }
+
+    &__description {
+        grid-area: description;
+        padding: .4rem 1rem;
+        font-size: 1.2rem;
+    }
+
+    &__site-image-wrapper {
+        grid-area: site-image;
+        width: auto;
+        height: 10rem;
+    }
+    
+    &__site-image {
+        object-fit: scale-down;
+        object-position: top;
+    }
+
     @mixin label-font {
         font-size: 1.6rem;
         color: inherit;

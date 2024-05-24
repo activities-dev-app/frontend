@@ -46,10 +46,12 @@
         
         &--light {
             scrollbar-color: $color-light $color-white;
+            border-color: $color-light;
         }
 
         &--dark {
             scrollbar-color: $color-dark $background-color-hover-dark;
+            border-color: $color-dark;
         }
 
         &__objects-list {
@@ -96,7 +98,11 @@
         padding: 1rem;
 
         /* Class applied to an object of type === "link, etc */
-        //&--link {}
+        &--link {
+            border: 2px solid;
+            border-color: inherit;
+            border-radius: .5rem;
+        }
         //&--text {}
         //&--code {}
         //&--image {}

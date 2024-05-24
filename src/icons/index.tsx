@@ -1,18 +1,28 @@
-import { 
-    IconArrowAutofitHeight, 
-    IconArrowAutofitWidth, 
-    IconArrowsMaximize, 
-    IconArrowsMinimize, 
-    IconFocusCentered, 
-    IconZoom, 
-    IconZoomCancel, 
-    IconZoomIn, 
-    IconZoomOut, 
+import {
+    IconArrowAutofitHeight,
+    IconArrowAutofitWidth,
+    IconArrowsMaximize,
+    IconArrowsMinimize,
+    IconFocusCentered,
+    IconZoom,
+    IconZoomCancel,
+    IconZoomIn,
+    IconZoomOut,
     IconZoomReset,
     IconBrandGithub,
     IconMail,
+    IconLink
 } from "@tabler/icons-react";
 
+
+/* Link Icon */
+const link = (className = "") => {
+    return (
+        <IconLink
+            className={className ? `icon icon-link ${className}` : "icon icon-link"}
+        />
+    );
+};
 
 /* Email Icon */
 const email = (className = "") => {
@@ -92,7 +102,7 @@ const zoomFitHeight = (className = "") => {
 const zoomCenter = (className = "") => {
     return (
         <IconFocusCentered
-        className={className ? `icon icon-zoom-center ${className}` : "icon icon-zoom-center"}
+            className={className ? `icon icon-zoom-center ${className}` : "icon icon-zoom-center"}
         />
     );
 }
@@ -641,6 +651,7 @@ const x = (className: string = "") => {
 };
 
 type IconType =
+    "link" |
     "email" |
     "github" |
     "fullscreen-on" |
@@ -682,6 +693,8 @@ type IconType =
 
 const Icon: React.FC<{ icon: IconType, className?: string }> = ({ icon, className }) => {
     switch (icon) {
+        case "link":
+            return link(className);
         case "email":
             return email(className);
         case "github":

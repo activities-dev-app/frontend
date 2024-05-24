@@ -9,6 +9,7 @@ import { Button } from "@/components";
 import { useAutomaticCloseForm } from "./useAutomaticCloseForm";
 import { NoteBox } from "./NoteBox";
 import { useSession } from "@/app/auth/context";
+import { getWebsiteDetails } from "../LinkObject/api"
 
 interface AddLinkFormProps {
     activityId: string,
@@ -17,11 +18,11 @@ interface AddLinkFormProps {
     setShow: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export const AddLinkForm = ({ 
-    activityId,  
+export const AddLinkForm = ({
+    activityId,
     position,
-    show, 
-    setShow, 
+    show,
+    setShow,
 }: AddLinkFormProps) => {
 
     const { mode } = useTheme();
@@ -30,7 +31,7 @@ export const AddLinkForm = ({
     const [url, setUrl] = useState<string>("");
     const [label, setLabel] = useState<string>("");
     const [comment, setComment] = useState<string>("");
-
+    
     const { addObject } = useDataContext();
 
     const clear = useCallback(() => {
@@ -43,20 +44,47 @@ export const AddLinkForm = ({
         if (session) {
             const { userId } = session;
 
-            if (isValidUrl(url) && !isEmpty(url)) {
-                addObject({
-                    userId,
-                    activityId,
-                    type: "link",
-                    position,
-                    linkData: { url, label: label || url, comment },
-                });
-            }
+            getWebsiteDetails(url).then(r => {
+
+                console.log(r);
+
+                if (isValidUrl(url) && !isEmpty(url)) {
+                    addObject({
+                        userId,
+                        activityId,
+                        type: "link",
+                        position,
+                        linkData: {
+                            url,
+                            label: label || url,
+                            comment,
+                            title: r.title,
+                            description: r.description,
+                            images: r.images,
+                            favicon: r.favicon,
+                            domain: r.domain,
+                            sitename: r.sitename,
+                        },
+                    });
+                }
+            })
+            .catch(err => console.log(err));
+
         }
-        
+
         setShow(false);
         clear();
-    }, [url, label, comment, activityId, position, session, setShow, addObject, clear]);
+    }, [
+        url, 
+        label, 
+        comment, 
+        activityId, 
+        position, 
+        session, 
+        setShow, 
+        addObject, 
+        clear
+    ]);
 
     const cancel = useCallback(() => {
         setShow(false);
@@ -92,7 +120,7 @@ export const AddLinkForm = ({
                 mode={mode}
             />
 
-            <FormInput
+            {/* <FormInput
                 id="label-input"
                 label="Link label"
                 value={label}
@@ -102,7 +130,7 @@ export const AddLinkForm = ({
                 type="text"
                 size="small"
                 mode={mode}
-            />
+            /> */}
 
             <NoteBox comment={comment} setComment={setComment} label={"Add a note about this link."} />
 
