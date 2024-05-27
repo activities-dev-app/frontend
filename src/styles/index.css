@@ -1019,10 +1019,14 @@ body {
   display: flex;
   flex-direction: column;
 }
+.activity__controls-wrapper {
+  overflow: hidden;
+  display: flex;
+}
 .activity__control-panel {
   display: flex;
-  width: max-content;
-  gap: 0.8rem;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 .activity__control-panel__scroll-wrapper {
   position: sticky;
@@ -1030,13 +1034,27 @@ body {
   z-index: 1000;
   max-width: 100%;
   overflow-x: scroll;
+  overflow-y: hidden;
   padding-top: 0.8rem;
   padding-bottom: 1.2rem;
+}
+.activity__control-panel__buttons {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 0.4rem;
+  width: max-content;
+}
+.activity__control-panel__scroll-button {
+  background-color: inherit;
 }
 .activity__control-panel__button {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 .activity__control-panel__button:disabled {
   opacity: 0.55;
@@ -1055,6 +1073,39 @@ body {
 }
 .activity__control-panel__button__add-object--dark:hover:not(:disabled) {
   background-color: #333333;
+}
+.activity__control-panel__button__icon {
+  height: 1.4rem;
+  width: 1.4rem;
+}
+.activity__control-panel__code-sandbox-options-wrapper {
+  position: relative;
+}
+.activity__control-panel__code-sandbox-options-modal {
+  width: 80%;
+  max-width: 50rem;
+}
+.activity__control-panel__code-sandbox-options {
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
+}
+.activity__control-panel__code-sandbox-options__option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.activity__control-panel__code-sandbox-options__option__text {
+  font-size: 1.4rem;
+}
+.activity__control-panel__code-sandbox-options__option__button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+.activity__control-panel__code-sandbox-options__option:not(:last-child) {
+  margin-bottom: 2rem;
 }
 .activity__board {
   padding: 1rem;

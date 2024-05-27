@@ -11,7 +11,14 @@ import {
     IconZoomReset,
     IconBrandGithub,
     IconMail,
-    IconLink
+    IconLink,
+    IconLinkPlus,
+    IconPhoto,
+    IconPhotoPlus,
+    IconCode,
+    IconCodePlus,
+    IconTextPlus,
+    IconBrandCodesandbox,
 } from "@tabler/icons-react";
 
 
@@ -20,6 +27,67 @@ const link = (className = "") => {
     return (
         <IconLink
             className={className ? `icon icon-link ${className}` : "icon icon-link"}
+        />
+    );
+};
+
+/* Link Icon */
+const linkPlus = (className = "") => {
+    return (
+        <IconLinkPlus
+            className={className ? `icon icon-link-plus ${className}` : "icon icon-link-plus"}
+        />
+    );
+};
+
+/* Text Icon */
+const text = (className = "") => {
+    return (
+        <IconTextPlus
+            className={className ? `icon icon-text ${className}` : "icon icon-text"}
+        />
+    );
+};
+
+/* Photo Icon */
+const photo = (className = "") => {
+    return (
+        <IconPhoto
+            className={className ? `icon icon-photo ${className}` : "icon icon-photo"}
+        />
+    );
+};
+
+const photoPlus = (className = "") => {
+    return (
+        <IconPhotoPlus
+            className={className ? `icon icon-photo-plus ${className}` : "icon icon-photo-plus"}
+        />
+    );
+};
+
+/* Code Icon */
+const code = (className = "") => {
+    return (
+        <IconCode
+            className={className ? `icon icon-code ${className}` : "icon icon-code"}
+        />
+    );
+};
+
+const codePlus = (className = "") => {
+    return (
+        <IconCodePlus
+            className={className ? `icon icon-code-plus ${className}` : "icon icon-code-plus"}
+        />
+    );
+};
+
+/* Sandbox Icon */
+const codeSandbox = (className = "") => {
+    return (
+        <IconBrandCodesandbox
+            className={className ? `icon icon-code-sandbox ${className}` : "icon icon-code-sandbox"}
         />
     );
 };
@@ -652,6 +720,14 @@ const x = (className: string = "") => {
 
 type IconType =
     "link" |
+    "link-plus" |
+    "code" |
+    "code-plus" |
+    "photo" |
+    "photo-plus" |
+    "text" |
+    "codeSandbox" |
+    "link" |
     "email" |
     "github" |
     "fullscreen-on" |
@@ -693,6 +769,20 @@ type IconType =
 
 const Icon: React.FC<{ icon: IconType, className?: string }> = ({ icon, className }) => {
     switch (icon) {
+        case "code":
+            return code(className);
+        case "code-plus":
+            return codePlus(className);
+        case "codeSandbox":
+            return codeSandbox(className);
+        case "link-plus":
+            return linkPlus(className);
+        case "photo":
+            return photo(className);
+        case "photo-plus":
+            return photoPlus(className);
+        case "text":
+            return text(className);
         case "link":
             return link(className);
         case "email":
