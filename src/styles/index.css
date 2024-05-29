@@ -359,6 +359,9 @@ body {
 .dashboard__allotment__main-pane--dark {
   background-color: #262626;
 }
+.dashboard__allotment__main-pane__internal-wrapper {
+  display: flex;
+}
 
 .dashboard-home {
   width: 100%;
@@ -509,14 +512,9 @@ body {
 .dashboard__main-pane__variable-width {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 5rem);
   height: 100%;
+  width: 100%;
   overflow: hidden;
-}
-@media screen and (min-width: 992px) {
-  .dashboard__main-pane__variable-width {
-    max-width: calc(100% - 16rem);
-  }
 }
 .dashboard__main-pane__header {
   padding: 1rem;
@@ -526,6 +524,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 .dashboard__main-pane__header--light {
   color: darkslateblue;
@@ -1109,6 +1108,29 @@ body {
 }
 .activity__board {
   padding: 1rem;
+  height: 100%;
+  width: calc(100% - 5rem);
+  overflow: scroll;
+}
+.activity__board__wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+@media screen and (min-width: 992px) {
+  .activity__board {
+    max-width: calc(100% - 16rem);
+  }
+}
+.activity__board__aside {
+  padding: 1rem;
+  width: 5rem;
+  list-style: none;
+}
+@media screen and (min-width: 992px) {
+  .activity__board__aside {
+    width: 16rem;
+  }
 }
 .activity__board--light {
   scrollbar-color: darkslateblue #f2f2f2;

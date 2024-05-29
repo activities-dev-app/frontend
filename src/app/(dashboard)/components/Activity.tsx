@@ -32,8 +32,6 @@ export default function ActivityComponent() {
     const { buildObjectsOrderings, activityObjectsOrderings } = useDataContext();
     const [showOptionsFor, setShowOptionsFor] = useState<{ id: string }>();
 
-
-
     if (!activity) {
         return (
             <div className="activity">
@@ -44,59 +42,71 @@ export default function ActivityComponent() {
 
     return (
         <div className="activity">
-            <div className={`activity__board activity__board--${mode}`}>
-                <ul className={`activity__board__objects-list activity__board__objects-list--${mode}`}>
-                    {/* <button onClick={() => buildObjectsOrderings()}>Build ordering</button> */}
-                    {/* <>
+            <div className="activity__board__wrapper">
+                <div className={`activity__board activity__board--${mode}`}>
+                    <ul className={`activity__board__objects-list activity__board__objects-list--${mode}`}>
+                        {/* <button onClick={() => buildObjectsOrderings()}>Build ordering</button> */}
+                        {/* <>
                         <button onClick={() => console.log("OBJECTS: ", objects)}>Log objects</button>
                         <button onClick={() => console.log("ORDERINGS: ", objectsOrdering)}>Log orderings</button>
                     </> */}
-                    <div className="activity__board__objects-list__counter">
-                        Count: {objects.length}
-                    </div>
-                    {objects.length === 0 &&
-                        <ControlPanel activity={activity} obj={null} setShow={setShowOptionsFor} />
-                    }
-                    {objects
-                        .map(obj => {
-                            return (
-                                <li key={obj.key} className={`
+                        <div className="activity__board__objects-list__counter">
+                            Count: {objects.length}
+                        </div>
+                        {objects.length === 0 &&
+                            <ControlPanel activity={activity} obj={null} setShow={setShowOptionsFor} />
+                        }
+                        {objects
+                            .map(obj => {
+                                return (
+                                    <li key={obj.key} className={`
                                         activity__board__objects-list__item 
                                         activity__board__objects-list__item--${mode}`}>
-                                    <hr />
-                                    <div className="activity__board__objects-list__item__header">
-                                        <div className="activity__board__objects-list__item__header__heading">
-                                            {obj.position + ") " + obj.key} {new Date(obj.created_at).toLocaleDateString()}
+                                        <hr />
+                                        <div className="activity__board__objects-list__item__header">
+                                            <div className="activity__board__objects-list__item__header__heading">
+                                                {obj.position + ") " + obj.key} {new Date(obj.created_at).toLocaleDateString()}
+                                            </div>
+                                            <div className="activity__board__objects-list__item__header__buttons">
+                                                {obj.position > 1 &&
+                                                    <Button onClick={() => moveUp(obj)}>
+                                                        Move up <Icon icon="arrow-up" />
+                                                    </Button>
+                                                }
+                                                {obj.position < objects.length &&
+                                                    <Button onClick={() => moveDown(obj)}>
+                                                        Move down <Icon icon="arrow-down" />
+                                                    </Button>
+                                                }
+                                            </div>
                                         </div>
-                                        <div className="activity__board__objects-list__item__header__buttons">
-                                            {obj.position > 1 &&
-                                                <Button onClick={() => moveUp(obj)}>
-                                                    Move up <Icon icon="arrow-up" />
-                                                </Button>
-                                            }
-                                            {obj.position < objects.length &&
-                                                <Button onClick={() => moveDown(obj)}>
-                                                    Move down <Icon icon="arrow-down" />
-                                                </Button>
-                                            }
+                                        <div className={`activity__object activity__object--${obj.type}`}>
+                                            <ObjectTypeSelector obj={obj} />
                                         </div>
-                                    </div>
-                                    <div className={`activity__object activity__object--${obj.type}`}>
-                                        <ObjectTypeSelector obj={obj} />
-                                    </div>
-                                    {showOptionsFor && showOptionsFor.id === obj.key ?
-                                        <ControlPanel activity={activity} obj={obj} setShow={setShowOptionsFor} /> :
-                                        <Button
-                                            className="activity__control-panel-wrapper__button activity__control-panel-wrapper__button--plus"
-                                            onClick={() => setShowOptionsFor({ id: obj.key })}>
-                                            <Icon icon="plus" />
-                                        </Button>
-                                    }
-                                </li>
-                            );
-                        })
-                    }
-                </ul>
+                                        {showOptionsFor && showOptionsFor.id === obj.key ?
+                                            <ControlPanel activity={activity} obj={obj} setShow={setShowOptionsFor} /> :
+                                            <Button
+                                                className="activity__control-panel-wrapper__button activity__control-panel-wrapper__button--plus"
+                                                onClick={() => setShowOptionsFor({ id: obj.key })}>
+                                                <Icon icon="plus" />
+                                            </Button>
+                                        }
+                                    </li>
+                                );
+                            })
+                        }
+                    </ul>
+                </div>
+                <div className="activity__board__aside">
+                    <div>Aside content</div>
+                    {/* {objects.map(obj => {
+                        return (
+                            <li key={obj.key}>
+                                { obj.position } - { obj.type }
+                            </li>
+                        )
+                    })} */}
+                </div>
             </div>
         </div>
     );
@@ -265,7 +275,7 @@ const ControlPanel = ({
                                             </p>
                                             <Button
                                                 baseClassName="activity__control-panel__button"
-                                                className="activity__control-panel__code-sandbox-options__option__button"                                                buttonName="add-object"
+                                                className="activity__control-panel__code-sandbox-options__option__button" buttonName="add-object"
                                                 themeMode={mode}
                                                 onClick={() => {
                                                     addObject({
@@ -285,7 +295,7 @@ const ControlPanel = ({
                                             </p>
                                             <Button
                                                 baseClassName="activity__control-panel__button"
-                                                className="activity__control-panel__code-sandbox-options__option__button"                                                buttonName="add-object"
+                                                className="activity__control-panel__code-sandbox-options__option__button" buttonName="add-object"
                                                 themeMode={mode}
                                                 onClick={() => {
                                                     addObject({
@@ -305,7 +315,7 @@ const ControlPanel = ({
                                             </p>
                                             <Button
                                                 baseClassName="activity__control-panel__button"
-                                                className="activity__control-panel__code-sandbox-options__option__button"                                                buttonName="add-object"
+                                                className="activity__control-panel__code-sandbox-options__option__button" buttonName="add-object"
                                                 themeMode={mode}
                                                 onClick={() => {
                                                     addObject({

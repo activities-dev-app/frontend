@@ -14,14 +14,10 @@
         &__variable-width {
             display: flex;
             flex-direction: column;
-            width: calc(100% - 5rem);
             height: 100%;
-
+            width: 100%;            
+            
             overflow: hidden;
-
-            @media screen and (min-width: 992px) {
-                max-width: calc(100% - 16rem);
-            }
         }
 
         &__header {
@@ -32,6 +28,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
 
             &--light {
                 color: $color-light;
@@ -69,8 +66,8 @@
             width: 100%;
             overflow: auto;
             overflow-x: hidden;
-            padding-right: .4rem;
-            
+            padding-right: 0.4rem;
+
             &--light {
                 scrollbar-color: $color-light $color-white;
             }

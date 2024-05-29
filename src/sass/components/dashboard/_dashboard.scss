@@ -43,6 +43,10 @@
             &--dark {
                 background-color: $background-color-hover-dark;
             }
+
+            &__internal-wrapper {
+                display: flex;
+            }
         }
     }
 }

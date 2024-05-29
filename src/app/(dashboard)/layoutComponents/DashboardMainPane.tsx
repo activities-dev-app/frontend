@@ -16,7 +16,7 @@ import Link from "next/link";
 const DashboardMainPane = memo(({ children }: { children: React.ReactNode }) => {
 
     const { mode } = useTheme();
-    
+
     return (
         <div className={`dashboard__main-pane dashboard__main-pane--${mode}`}>
             <DashboardAppHeader />
@@ -55,7 +55,7 @@ const Header = () => {
                     if (activity.key === params.id) {
                         return (
                             <div className="dashboard__main-pane__header__wrapper" key={activity.key}>
-                                <Link 
+                                <Link
                                     className="dashboard__main-pane__header__back-button"
                                     href={`/dashboard/category/${activity.categoryId}`}>
                                     Back
