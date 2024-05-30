@@ -1,35 +1,88 @@
 "use client";
 
+import { useCallback, useRef, useState } from "react";
 import { useTheme } from "@/context";
+
 import DashboardMainPane from "./DashboardMainPane";
 import DashboardSidePane from "./DashboardSidePane"
+
+import { Button } from "@/components";
+import Icon from "@/icons";
+
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
+
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
 
     const { mode } = useTheme();
+    const {
+        sidePaneRef,
+        show,
+        hideSidebar,
+        showSidebar,
+        onAllotmentChange,
+        onDragStart,
+        onDragEnd,
+        protectionActive,
+    } = useAllotmentHelpers();
+
     return (
         <div className={`dashboard dashboard--${mode}`}>
             <Allotment
                 proportionalLayout={false}
                 separator={false}
-                className={`dashboard__allotment dashboard__allotment--${mode}`}
-            >
+                onChange={onAllotmentChange}
+                onDragStart={onDragStart}
+                onDragEnd={onDragEnd}
+                className={`dashboard__allotment dashboard__allotment--${mode}`}>
+
                 <Allotment.Pane
-                    minSize={100}
+                    minSize={40}
+                    maxSize={40}
+                    snap={false}
+                    preferredSize={40}
+                    visible={true}>
+                    <div
+                        className="dashboard__side-pane__fixedbar">
+                        {show ?
+                            <Button
+                                className="dashboard__side-pane__fixedbar__button dashboard__side-pane__fixedbar__button--hide"
+                                onClick={hideSidebar}>
+                                <Icon className="" icon="chevrons-left" />
+                            </Button> :
+                            <Button
+                                className="dashboard__side-pane__fixedbar__button dashboard__side-pane__fixedbar__button--show"
+                                onClick={showSidebar}>
+                                <Icon className="" icon="chevrons-right" />
+                            </Button>
+                        }
+                    </div>
+                </Allotment.Pane>
+
+                <Allotment.Pane
+                    minSize={200}
                     preferredSize={200}
                     snap={true}
-                    className={`dashboard__allotment__side-pane 
-                        dashboard__allotment__side-pane--${mode}`}
-                >
+                    visible={show}
+                    ref={sidePaneRef}
+                    className={`dashboard__allotment__side-pane dashboard__allotment__side-pane--${mode}`}>
+                    <div className="dashboard__side-pane__click-protection"
+                        style={{
+                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                            width: 200,
+                            height: "100%",
+                            position: "absolute",
+                            zIndex: 3000,
+                            visibility: protectionActive ? "visible" : "hidden"
+                        }}
+                    ></div>
                     <DashboardSidePane />
                 </Allotment.Pane>
+
                 <Allotment.Pane
                     minSize={400}
-                    className={`dashboard__allotment__main-pane 
-                        dashboard__allotment__main-pane--${mode}`}
-                >
+                    className={`dashboard__allotment__main-pane dashboard__allotment__main-pane--${mode}`}>
                     <DashboardMainPane>
                         {children}
                     </DashboardMainPane>
@@ -40,101 +93,52 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
 }
 
 
-/* 
+const useAllotmentHelpers = () => {
 
-"use client";
+    const [show, setShow] = useState<boolean>(true);
+    const [protectionActive, setProtectionActive] = useState<boolean>(false);
+    const sidePaneRef = useRef<HTMLDivElement>(null);
 
-import { useEffect, useRef, useState } from "react";
-import DashboardMainPane from "./DashboardMainPane";
-import DashboardSidePane from "./DashboardSidePane"
-import { PanelGroup, Panel, PanelResizeHandle, ImperativePanelHandle } from "react-resizable-panels";
-
-export default function Dashboard({ children }: { children: React.ReactNode }) {
-
-    const ref = useRef<ImperativePanelHandle>(null);
-    const { initialPercentValue, setSize, windowInnerWidth } = useWindow(ref);
-    
-
-    return (
-        <div className="dashboard">
-            <PanelGroup direction="horizontal">
-                <Panel
-                    defaultSize={initialPercentValue}
-                    minSize={130*100/windowInnerWidth}
-                    ref={ref}
-                    order={1}
-                    collapsible
-                    //onResize={setSize}
-                >
-                    <DashboardSidePane />
-                </Panel>
-                <PanelResizeHandle className="resize-handle"/>
-                <Panel
-                    defaultSize={100 - initialPercentValue}
-                    minSize={30000/windowInnerWidth}
-                    order={2}>
-                    <DashboardMainPane>
-                        {children}
-                    </DashboardMainPane>
-                </Panel>
-            </PanelGroup>
-        </div>
-    );
-}
-
-const useWindow = (ref: React.RefObject<ImperativePanelHandle>) => {
-
-    const width = (size: number) => size * window.innerWidth / 100;
-    const percentValue = (width: number) => width * 100 / window.innerWidth;
-
-    const initialWidth = 200;
-    const widthRef = useRef<number>(initialWidth);
-    const initialPercentValue = percentValue(initialWidth);
-    const [size, setSize] = useState(initialPercentValue);
-    const windowInnerWidth = useRef<number>(window.innerWidth);
-
-    useEffect(() => {
-        const onResize = () => {
-            console.log(window.innerWidth);
-            if (windowInnerWidth) {
-                windowInnerWidth.current = window.innerWidth;
-            }
-        };
-
-        window.addEventListener("resize", onResize);
-
-        return () => {
-            window.removeEventListener("resize", onResize);
+    const getSidePaneWidth = useCallback(() => {
+        const currentSidePane = sidePaneRef.current;
+        if (currentSidePane) {
+            return currentSidePane.getBoundingClientRect().width;
         }
+    }, [sidePaneRef]);
+
+    const onAllotmentChange = useCallback(() => {
+        const width = getSidePaneWidth();
+        console.log("changed to: ", width);
+        if (width === 0) {
+            setShow(false);
+        } else {
+            setShow(true);
+        }
+    }, [getSidePaneWidth]);
+
+    const hideSidebar = useCallback(() => {
+        setShow(false);
     }, []);
 
-    useEffect(() => {
-        if (widthRef) {
-            widthRef.current = width(size);
-        }
-    }, [size]);
-
-    useEffect(() => {
-        const panel = ref.current;
-
-        const onResize = () => {
-            if (panel) {
-                if (widthRef) {
-                    panel.resize(percentValue(widthRef.current));
-                }
-            }
-        };
-
-        window.addEventListener("resize", onResize);
-
-        return () => {
-            window.removeEventListener("resize", onResize);
-        }
+    const showSidebar = useCallback(() => {
+        setShow(true);
     }, []);
+
+    const onDragStart = useCallback(() => {
+        setProtectionActive(true);
+    }, [])
+    const onDragEnd = useCallback(() => {
+        setProtectionActive(false);
+    }, [])
 
     return {
-        initialPercentValue,
-        setSize,
-        windowInnerWidth: windowInnerWidth.current
+        sidePaneRef,
+        show,
+        onAllotmentChange,
+        hideSidebar,
+        showSidebar,
+        onDragStart,
+        onDragEnd,
+        protectionActive,
     };
-}; */
+};

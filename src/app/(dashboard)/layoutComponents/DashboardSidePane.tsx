@@ -10,7 +10,7 @@ import Icon from "@/icons";
 const DashboardSidePane = memo(() => {
 
     const { mode } = useTheme();
-    
+
     return (
         <div className={`dashboard__side-pane dashboard__side-pane--${mode}`}>
             <Header />
@@ -48,8 +48,8 @@ const Footer = memo(() => {
                 buttonName="add"
                 themeMode={mode}
                 className="dashboard__side-pane__footer__button"
-                onClick={() => setShowActivityForm(true)}
-            >
+                onClick={() => setShowActivityForm(true)}>
+
                 <span className="dashboard__side-pane__footer__button__text">
                     Add
                 </span>

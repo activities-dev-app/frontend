@@ -8,6 +8,20 @@
         position: relative;
         padding-right: 0.2rem;
 
+
+        &__fixedbar {
+            width: 4rem;
+            height: 100%;
+
+            &__button {
+                width: 4rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: .6rem;
+            }
+        }
+
         //&--light {}
 
         //&--dark {}
