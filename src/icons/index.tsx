@@ -21,7 +21,30 @@ import {
     IconBrandCodesandbox,
     IconChevronsLeft,
     IconChevronsRight,
+    IconCaretDown,
+    IconSquareChevronsUp
 } from "@tabler/icons-react";
+
+
+
+/* Square Chevrons up */
+const squareChevronsUp = (className = "") => {
+    return (
+        <IconSquareChevronsUp
+            className={className ? `icon icon-square-chevrons-up ${className}` : "icon icon-square-chevrons-up"}
+        />
+    );
+};
+
+
+/* Caret down */
+const caretDown = (className = "") => {
+    return (
+        <IconCaretDown
+            className={className ? `icon icon-caret-down ${className}` : "icon icon-caret-down"}
+        />
+    );
+};
 
 
 /* Chevrons Left */
@@ -741,6 +764,8 @@ const x = (className: string = "") => {
 };
 
 type IconType =
+    "square-chevrons-up" |
+    "caret-down" |
     "chevrons-left" |
     "chevrons-right" |
     "link" |
@@ -793,6 +818,10 @@ type IconType =
 
 const Icon: React.FC<{ icon: IconType, className?: string }> = ({ icon, className }) => {
     switch (icon) {
+        case "square-chevrons-up":
+            return squareChevronsUp(className);
+        case "caret-down":
+            return caretDown(className);
         case "chevrons-left":
             return chevronsLeft(className);
         case "chevrons-right":
