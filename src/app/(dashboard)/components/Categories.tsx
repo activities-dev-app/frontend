@@ -29,7 +29,7 @@ In this file:
 */
 "use client";
 
-import { FC, memo, useMemo } from "react";
+import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { useFilter, useSorting, useTheme } from "@/context";
 import { useDataContext } from "@/app/(dashboard)/context";
@@ -42,11 +42,21 @@ import { Mode } from "@/context/ThemeContext";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 import { Tooltip } from "react-tooltip";
+import Icon from "@/icons";
+import { ShownGroupedActivities } from "../layoutComponents/DashboardSidePane";
 
-const Categories: FC = memo(() => {
+
+const Categories = memo(({
+    shownGroupedActivities,
+    setShownGroupedActivities
+}: {
+    shownGroupedActivities: ShownGroupedActivities,
+    setShownGroupedActivities: React.Dispatch<React.SetStateAction<ShownGroupedActivities>>,
+}) => {
     const { activityList, error } = useActivityList();
     const { mode } = useTheme();
     const params = useParams();
+
 
     if (!activityList) {
         return (
@@ -61,12 +71,6 @@ const Categories: FC = memo(() => {
             <div className={`categories categories--${mode}`}>
                 <div className="error">
                     <p>An error ocurred!</p>
-                    {/* <button
-                        className="button button__reload"
-                        onClick={() => fetchActivities()}
-                    >
-                        Reload
-                    </button> */}
                 </div>
             </div>
         );
@@ -74,7 +78,13 @@ const Categories: FC = memo(() => {
 
     return (
         <div className={`categories categories--${mode}`}>
-            <List activityList={activityList} mode={mode} params={params} />
+            <List
+                activityList={activityList}
+                mode={mode}
+                params={params}
+                shownGroupedActivities={shownGroupedActivities}
+                setShownGroupedActivities={setShownGroupedActivities}
+            />
         </div>
     );
 });
@@ -82,8 +92,36 @@ Categories.displayName = "Categories";
 export default Categories;
 
 
-interface ListProps { activityList: ActivityList, mode: Mode, params: Params }
-const List: FC<ListProps> = memo(({ activityList, mode, params }: ListProps) => {
+interface ListProps {
+    activityList: ActivityList,
+    mode: Mode,
+    params: Params,
+    shownGroupedActivities: ShownGroupedActivities,
+    setShownGroupedActivities: React.Dispatch<React.SetStateAction<ShownGroupedActivities>>;
+}
+const List: FC<ListProps> = memo(({
+    activityList,
+    mode,
+    params,
+    shownGroupedActivities,
+    setShownGroupedActivities
+}: ListProps) => {
+
+    const colapseGroup = useCallback(({ e, categoryId }: { e: React.MouseEvent, categoryId: string }) => {
+        setShownGroupedActivities(shownGroupedActivities.filter(item => {
+            return item.key !== categoryId;
+        }));
+    }, [setShownGroupedActivities, shownGroupedActivities]);
+
+    const expandGroup = useCallback(({ e, categoryId }: { e: React.MouseEvent, categoryId: string }) => {
+        if (e.currentTarget.id === categoryId) {
+            setShownGroupedActivities([
+                ...shownGroupedActivities,
+                { key: categoryId, value: true }
+            ]);
+        }
+    }, [setShownGroupedActivities, shownGroupedActivities]);
+
     return (
         <ul className={`
             categories__list 
@@ -91,39 +129,55 @@ const List: FC<ListProps> = memo(({ activityList, mode, params }: ListProps) => 
             {
                 activityList.map(category => {
                     const itemText = category.name ? category.name : `Topic-${category.id}`;
+                    const categoryId = category.id;
 
                     return (
-                        <li key={category.id}
+                        <li key={categoryId}
                             className={category.id === params.categoryId || category.activities.map(activity => activity.key).includes(String(params.id)) ?
                                 `categories__list__item categories__list__item--${mode} categories__list__item__selected categories__list__item__selected--${mode}` :
                                 `categories__list__item categories__list__item--${mode}`
                             }>
-                            <Link
-                                href={`/dashboard/category/${category.id}`}
-                                className={`
+                            <div style={{ display: "flex" }}>
+                                {
+                                    shownGroupedActivities.filter(item => item.key === categoryId && item.value === true).length > 0 ?
+                                        <button className="button" onClick={e => colapseGroup({ e, categoryId })}>
+                                            <Icon icon="caret-down" />
+                                        </button> :
+                                        <button id={categoryId} className="button" onClick={e => expandGroup({ e, categoryId })}>
+                                            <Icon icon="caret-right" />
+                                        </button>
+                                }
+                                <Link
+                                    id={categoryId}
+                                    onClick={e => expandGroup({ e, categoryId })}
+                                    href={`/dashboard/category/${category.id}`}
+                                    className={`
                                     categories__list__item__link 
                                     categories__list__item__link--${mode}`}>
-                                <span
-                                    data-tooltip-id={category.id}
-                                    data-tooltip-html={itemText}
-                                    data-tooltip-position-strategy="fixed"
-                                    data-tooltip-place="top-start"
-                                    data-tooltip-class-name={
-                                        `categories__list__item__link__tooltip 
+                                    <span
+                                        data-tooltip-id={category.id}
+                                        data-tooltip-html={itemText}
+                                        data-tooltip-position-strategy="fixed"
+                                        data-tooltip-place="top-start"
+                                        data-tooltip-class-name={
+                                            `categories__list__item__link__tooltip 
                                         categories__list__item__link__tooltip--${mode}`
-                                    }
-                                >
-                                    {itemText}
-                                    <Tooltip
-                                        id={category.id}
-                                        opacity={1}
-                                        noArrow={true}
-                                    />
-                                </span>
+                                        }
+                                        data-tooltip-delay-show={250}
+                                    >
+                                        {itemText}
+                                        <Tooltip
+                                            id={category.id}
+                                            opacity={1}
+                                            noArrow={true}
+                                        />
+                                    </span>
 
-                            </Link>
+                                </Link>
+                            </div>
 
-                            <GroupedActivities activities={category.activities} />
+                            {shownGroupedActivities.filter(item => item.key === categoryId && item.value === true).length > 0 &&
+                                <GroupedActivities activities={category.activities} />}
                         </li>
                     );
                 })

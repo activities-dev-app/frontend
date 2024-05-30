@@ -69,8 +69,8 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
                     className={`dashboard__allotment__side-pane dashboard__allotment__side-pane--${mode}`}>
                     <div className="dashboard__side-pane__click-protection"
                         style={{
-                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
-                            width: 200,
+                            //backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                            width: "100%",
                             height: "100%",
                             position: "absolute",
                             zIndex: 3000,

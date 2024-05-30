@@ -1,22 +1,32 @@
 "use client"
 
-import { memo } from "react";
+import { memo, useCallback, useState } from "react";
 import { useForm, useTheme } from "@/context";
 import { Categories, FilterComponent, SortingComponent } from "@/app/(dashboard)/components";
 import { Button } from "@/components";
 import Icon from "@/icons";
+import { Tooltip } from "react-tooltip";
 
 
 const DashboardSidePane = memo(() => {
 
     const { mode } = useTheme();
 
+    const {
+        setShownGroupedActivities,
+        shownGroupedActivities,
+        collapseAll
+    } = useCategoriesCollapsibles();
+
     return (
         <div className={`dashboard__side-pane dashboard__side-pane--${mode}`}>
-            <Header />
+            <Header collapseAll={collapseAll}/>
 
             <div className={`dashboard__side-pane__main dashboard__side-pane__main--${mode}`}>
-                <Categories />
+                <Categories
+                    setShownGroupedActivities={setShownGroupedActivities}
+                    shownGroupedActivities={shownGroupedActivities}
+                />
             </div>
 
             <Footer />
@@ -27,11 +37,34 @@ DashboardSidePane.displayName = "DashboardSidePane";
 export default DashboardSidePane;
 
 
-const Header = memo(() => {
+const Header = memo(({ collapseAll }: { collapseAll: () => void }) => {
+
+    const { mode } = useTheme();
     return (
         <div className="dashboard__side-pane__header">
             <FilterComponent />
-            <SortingComponent />
+            {/* <SortingComponent /> */}
+            <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+            }}>
+                <SortingComponent />
+                <button
+                    className="button"
+                    data-tooltip-id="button-id"
+                    data-tooltip-html={"Collapse all folders"}
+                    data-tooltip-position-strategy="fixed"
+                    data-tooltip-place="top-start"
+                    data-tooltip-class-name={`dashboard__side-pane__header__tooltip dashboard__side-pane__header__tooltip--${mode}`}
+                    onClick={collapseAll}>
+                    <Icon icon="square-chevrons-up" />
+                </button>
+                <Tooltip
+                    id="button-id"
+                    opacity={1}
+                    noArrow={true}
+                />
+            </div>
         </div>
     );
 });
@@ -61,3 +94,16 @@ const Footer = memo(() => {
     );
 });
 Footer.displayName = "Footer";
+
+export type ShownGroupedActivities = { key: string, value: boolean }[];
+
+const useCategoriesCollapsibles = () => {
+
+    const [shownGroupedActivities, setShownGroupedActivities] = useState<ShownGroupedActivities>([]);
+
+    const collapseAll = useCallback(() => {
+        setShownGroupedActivities([]);
+    }, [setShownGroupedActivities]);
+
+    return { shownGroupedActivities, setShownGroupedActivities, collapseAll };
+};

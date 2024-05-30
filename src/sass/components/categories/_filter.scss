@@ -12,6 +12,7 @@
 
         &--light {
             background-color: $background-white;
+            border: .2rem solid $color-light;
 
             &:focus-visible {
                 outline: 2px solid $color-light;
@@ -21,11 +22,14 @@
         &--dark {
             background-color: $background-black;
             color: $color-dark;
+            border: .2rem solid $color-dark;
 
             &:focus-visible {
                 outline: 2px solid $color-dark;
             }
         }
+
+        border-radius: .4rem;
     }
 
 

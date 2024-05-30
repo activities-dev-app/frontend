@@ -8,7 +8,6 @@
         position: relative;
         padding-right: 0.2rem;
 
-
         &__fixedbar {
             width: 4rem;
             height: 100%;
@@ -18,7 +17,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                padding: .6rem;
+                padding: 0.6rem;
             }
         }
 
@@ -32,6 +31,22 @@
             width: 100%;
             max-width: 100%;
             padding: 0.5rem;
+            font-size: 1.4rem;
+
+            &__tooltip {
+                z-index: 1000 !important;
+                border: 0.1rem solid;
+
+                &--light {
+                    background-color: $color-white !important;
+                    color: $color-light !important;
+                }
+
+                &--dark {
+                    background-color: $background-color-hover-dark !important;
+                    color: $color-dark !important;
+                }
+            }
         }
 
         &__main {

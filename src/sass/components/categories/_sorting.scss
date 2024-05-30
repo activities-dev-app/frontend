@@ -1,26 +1,26 @@
 .sorting {
-    padding: .5rem;
+    padding: 0.5rem;
 
     *:not(:last-child) {
         margin-right: 1rem;
     }
 
-    &__button {        
+    &__button {
         &__icon {
             width: 2rem;
             height: 2rem;
 
             &--light {
                 color: $color-light;
-                
+
                 &:hover {
                     color: $color-hover-light;
                 }
             }
-            
+
             &--dark {
                 color: $color-dark;
-                
+
                 &:hover {
                     color: $color-hover-dark;
                 }
@@ -31,22 +31,37 @@
                     color: $color-light;
                     cursor: default;
                     border-bottom: 1px solid $color-light;
-        
+
                     &:hover {
                         color: $color-light;
                     }
                 }
-                
+
                 &--dark {
                     color: $color-dark;
                     cursor: default;
                     border-bottom: 1px solid $color-dark;
-                    
+
                     &:hover {
                         color: $color-dark;
                     }
                 }
             }
+        }
+    }
+
+    &__tooltip {
+        z-index: 1000 !important;
+        border: 0.1rem solid;
+
+        &--light {
+            background-color: $color-white !important;
+            color: $color-light !important;
+        }
+
+        &--dark {
+            background-color: $background-color-hover-dark !important;
+            color: $color-dark !important;
         }
     }
 }
