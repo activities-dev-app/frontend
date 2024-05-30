@@ -19,7 +19,29 @@ import {
     IconCodePlus,
     IconTextPlus,
     IconBrandCodesandbox,
+    IconChevronsLeft,
+    IconChevronsRight,
 } from "@tabler/icons-react";
+
+
+/* Chevrons Left */
+const chevronsLeft = (className = "") => {
+    return (
+        <IconChevronsLeft
+            className={className ? `icon icon-chevrons-left ${className}` : "icon icon-chevrons-left"}
+        />
+    );
+};
+
+
+/* Chevrons Right */
+const chevronsRight = (className = "") => {
+    return (
+        <IconChevronsRight
+            className={className ? `icon icon-chevrons-right ${className}` : "icon icon-chevrons-right"}
+        />
+    );
+};
 
 
 /* Link Icon */
@@ -719,6 +741,8 @@ const x = (className: string = "") => {
 };
 
 type IconType =
+    "chevrons-left" |
+    "chevrons-right" |
     "link" |
     "link-plus" |
     "code" |
@@ -769,6 +793,10 @@ type IconType =
 
 const Icon: React.FC<{ icon: IconType, className?: string }> = ({ icon, className }) => {
     switch (icon) {
+        case "chevrons-left":
+            return chevronsLeft(className);
+        case "chevrons-right":
+            return chevronsRight(className);
         case "code":
             return code(className);
         case "code-plus":
